@@ -13,6 +13,7 @@ class Task1{
         }catch (\InvalidArgumentException $e){
             echo "Main function accepts only integers.";
         }
+
     }
 }
 
