@@ -1,8 +1,6 @@
 <?php
 namespace src;
 
-use http\Exception\InvalidArgumentException;
-
 class Task1{
     function main(int $inputNumbers): string
     {
