@@ -2,7 +2,7 @@
 namespace src;
 
 class Task6{
-    function main(int $year, int $lastYear, int $month, int $lastMonth, string $day = 'Monday'){
+    function main(int $year, int $lastYear, int $month, int $lastMonth, string $day = 'Monday'):int{
         $count = 0;
         $startTime = strtotime("01.$month.$year");
         $endTime = strtotime("31.$lastMonth.$lastYear");
