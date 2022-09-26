@@ -9,8 +9,4 @@ class Task1{
     }
 }
 
-$inputNumbers = new Task1();
-$mainNumbers = "main";
-echo $inputNumbers->$mainNumbers(23);
-
 ?>
