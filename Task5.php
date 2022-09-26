@@ -11,7 +11,4 @@ class Task5{
     }
 }
 
-$classTask5 = new Task5();
-echo $classTask5->main(183);
-
 ?>
