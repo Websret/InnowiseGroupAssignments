@@ -13,8 +13,4 @@ class Task9{
     }
 }
 
-$classTask9 = new Task9();
-$arr = [2,7,7,1,8,2,7,8,7];
-var_dump($classTask9->main($arr, 16));
-
 ?>
