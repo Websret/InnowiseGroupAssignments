@@ -9,7 +9,4 @@ class Task4{
     }
 }
 
-$classTask4 = new Task4();
-echo $classTask4->main("The quick-brown_fox jumps over the_lazy-dog");
-
 ?>
