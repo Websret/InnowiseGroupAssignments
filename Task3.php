@@ -12,7 +12,4 @@ class Task3{
     }
 }
 
-$classTask3 = new Task3();
-echo $classTask3->main(5689);
-
 ?>
