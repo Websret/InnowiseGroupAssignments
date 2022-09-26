@@ -16,6 +16,4 @@ class Task6{
     }
 }
 
-$classTask6 = new Task6();
-echo $classTask6->main(1980, 1999, 1, 12);
 ?>
