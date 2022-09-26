@@ -50,9 +50,4 @@ class MyCalculator{
     }
 }
 
-$mycalc = new MyCalculator(12, 6);
-echo $mycalc->add();
-echo $mycalc->multiply();
-echo $mycalc->add()->divideBy(9);
-
 ?>
