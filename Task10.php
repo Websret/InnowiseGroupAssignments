@@ -1,15 +1,19 @@
 <?php
+
 namespace src;
 
-class Task10{
-    function main(int $input):array{
+class Task10
+{
+    public function main(int $input): array
+    {
         $array = array($input);
-        if ($input < 1)
+        if ($input < 1) {
             return [];
-        while($input > 1){
-            if($input % 2 == 0){
+        }
+        while ($input > 1) {
+            if ($input % 2 == 0) {
                 $input /= 2;
-            }else{
+            } else {
                 $input = 3 * $input + 1;
             }
             $array[] = $input;
@@ -17,8 +21,3 @@ class Task10{
         return $array;
     }
 }
-
-$classTask10 = new Task10();
-var_dump($classTask10->main(13));
-
-?>
