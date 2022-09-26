@@ -12,12 +12,4 @@ class Task8
     }
 }
 
-$classTask8 = new Task8();
-$json = '{"Title": "The Cuckoos Calling",
-"Author": "Robert Galbraith",
-"Detail": {
-"Publisher": "Little Brown"
-}}';
-$classTask8->main($json);
-
 ?>
