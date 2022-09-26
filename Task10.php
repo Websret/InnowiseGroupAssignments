@@ -18,7 +18,4 @@ class Task10{
     }
 }
 
-$classTask10 = new Task10();
-var_dump($classTask10->main(13));
-
 ?>
