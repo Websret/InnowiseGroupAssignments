@@ -10,7 +10,4 @@ class Task2{
     }
 }
 
-$classDate = new Task2();
-echo $classDate->main("17-05-2023");
-
 ?>
