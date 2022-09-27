@@ -22,24 +22,28 @@ class Task12
     public function add()
     {
         $this->answer = $this->num1 + $this->num2;
+
         return $this;
     }
 
     public function multiply()
     {
         $this->answer = $this->num1 * $this->num2;
+
         return $this;
     }
 
     public function divide()
     {
         $this->answer = $this->num1 / $this->num2;
+
         return $this;
     }
 
     public function subtract()
     {
         $this->answer = $this->num1 - $this->num2;
+
         return $this;
     }
 
