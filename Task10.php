@@ -7,8 +7,8 @@ class Task10
     public function main(int $input): array
     {
         $array = [$input];
-        if ($input < 1) {
-            return [];
+        if (!is_int($input) or $input < 1) {
+            throw new \InvalidArgumentException();
         }
         while ($input > 1) {
             if ($input % 2 == 0) {
