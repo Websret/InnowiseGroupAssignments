@@ -35,7 +35,7 @@ class Task12
 
     public function divide(): Task12
     {
-        if ($this->num1 < 1 or $this->num2 < 1) {
+        if ($this->num2 == 0) {
             throw new \InvalidArgumentException();
         }
         $this->answer = $this->num1 / $this->num2;
@@ -52,7 +52,7 @@ class Task12
 
     public function divideBy($number): int|float|string
     {
-        if ($number < 1) {
+        if ($number == 0) {
             throw new \InvalidArgumentException();
         }
 
