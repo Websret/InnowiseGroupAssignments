@@ -8,6 +8,7 @@ class Task7
     {
         unset($arr[$position]);
         array_splice($arr, $position, 1);
+
         return $arr;
     }
 }
