@@ -6,7 +6,7 @@ class Task10
 {
     public function main(int $input): array
     {
-        $array = array($input);
+        $array = [$input];
         if ($input < 1) {
             return [];
         }
@@ -18,6 +18,7 @@ class Task10
             }
             $array[] = $input;
         }
+
         return $array;
     }
 }
