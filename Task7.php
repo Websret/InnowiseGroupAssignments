@@ -6,7 +6,7 @@ class Task7
 {
     public function main(array $arr, int $position): array
     {
-        if ($position > count($arr) - 1) {
+        if ($position > count($arr) - 1 or $position < 0 or empty($arr)) {
             throw new \InvalidArgumentException();
         }
         unset($arr[$position]);
