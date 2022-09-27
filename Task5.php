@@ -2,7 +2,7 @@
 
 namespace src;
 
-ini_set('precision', 301);
+ini_set('precision', 300);
 
 class Task5
 {
@@ -14,7 +14,7 @@ class Task5
         $array = [0, 1];
         do {
             $array[] = $array[count($array) - 1] + $array[count($array) - 2];
-        } while (floor(log10($array[count($array) - 1]) + 2) <= $n);
+        } while (ceil(log10($array[count($array) - 1]) + 1) <= $n);
 
         return $array[count($array) - 1];
     }
