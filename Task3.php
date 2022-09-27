@@ -6,10 +6,10 @@ class Task3
 {
     public function main(int $number): int
     {
-        if ($number > 0) {
-            return ($number - 1) % 9 + 1;
+        if (!is_int($number) or $number < 9) {
+            throw new \InvalidArgumentException();
         } else {
-            return 0;
+            return ($number - 1) % 9 + 1;
         }
     }
 }
