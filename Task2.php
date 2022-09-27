@@ -8,6 +8,7 @@ class Task2
     {
         $today = time();
         $diff = (strtotime($date) - $today);
-        return (int)($diff/86400);
+
+        return (int)($diff / 86400);
     }
 }
