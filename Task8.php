@@ -8,8 +8,7 @@ class Task8
     {
         $arr = json_decode($js, true);
         array_walk_recursive($arr, function ($key, $val) {
-            echo $val, ":",$key,'
-';
+            echo $val, ':',$key,"\n";
         });
     }
 }
