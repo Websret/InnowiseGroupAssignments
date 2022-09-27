@@ -11,7 +11,7 @@ class Task6
         }
         $count = 0;
         $startTime = strtotime("01.$month.$year");
-        $lastDayMonth = cal_days_in_month(CAL_GREGORIAN, $lastMonth, $lastYear);
+        $lastDayMonth = date('t', mktime(0, 0, 0, $lastMonth, 1, $lastYear));
         $endTime = strtotime("$lastDayMonth.$lastMonth.$lastYear");
         while ($startTime <= $endTime) {
             if ((date('w', $startTime) == 1) and date('d', $startTime) == 1) {
