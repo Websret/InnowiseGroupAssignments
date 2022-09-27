@@ -13,8 +13,9 @@ class Task6
             if ((date('w', $startTime) == 1) and date('d', $startTime) == 1) {
                 $count++;
             }
-            $startTime+=86400;
+            $startTime += 86400;
         }
+
         return $count;
     }
 }
