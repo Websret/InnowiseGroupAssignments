@@ -2,15 +2,20 @@
 
 namespace src;
 
+ini_set('precision', 301);
+
 class Task5
 {
     public function main(int $n): string
     {
-        $array = [0, 1];
-        for ($i = 2; $i <= $n; $i++) {
-            $array[$i] = $array[$i - 1] + $array[$i - 2];
+        if ($n < 0) {
+            throw new \InvalidArgumentException();
         }
+        $array = [0, 1];
+        do {
+            $array[] = $array[count($array) - 1] + $array[count($array) - 2];
+        } while (floor(log10($array[count($array) - 1]) + 2) <= $n);
 
-        return (string) $array[$n];
+        return $array[count($array) - 1];
     }
 }
