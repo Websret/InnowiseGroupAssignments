@@ -4,16 +4,22 @@ namespace src;
 
 class Task8
 {
-    public function main(string $js): void
+    public function main(string $js): string
     {
         if (!$this->isJson($js)) {
             throw new \InvalidArgumentException();
         }
-        $arr = json_decode($js, true);
-
-        array_walk_recursive($arr, function ($key, $val) {
-            echo $val, ': ',$key,"\r\n";
-        });
+        $arr = json_decode($js);
+        if ($arr != null) {
+            return sprintf(
+                "Title: %s\r\nAuthor: %s\r\nPublisher: %s",
+                $arr->Title,
+                $arr->Author,
+                $arr->Detail->Publisher
+            );
+        } else {
+            throw new \InvalidArgumentException();
+        }
     }
 
     public function isJson($string): bool
