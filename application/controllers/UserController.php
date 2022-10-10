@@ -93,19 +93,17 @@ class UserController extends Controller
             'gender' => $_POST["gender"],
             'status' => $_POST["status"],
         ];
-        $result = $this->model->getUserEmail($params);
-        $result->setFetchMode(PDO::FETCH_ASSOC);
-        $row = $result->fetch();
+        $row = $this->model->getUserEmail(['email' => $_POST["email"]]);
         $members = $row['count'];
-        if (!filter_var($params["email"], FILTER_VALIDATE_EMAIL)){
+        if (!filter_var($params["email"], FILTER_VALIDATE_EMAIL)) {
             $_SESSION["message"] = "Email is not valid.";
             return false;
         }
-        if ($members > 0){
+        if ($members > 0) {
             $_SESSION["message"] = "This email is already in use";
             return false;
         }
-        if (strlen($params["name"]) < 3 and !preg_match("/^[a-zA-z]*$/", $params["name"])){
+        if (strlen($params["name"]) < 3 and !preg_match("/^[a-zA-z]*$/", $params["name"])) {
             $_SESSION["message"] = "Only alphabets and whitespace are allowed.";
             return false;
         }

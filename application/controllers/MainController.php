@@ -1,4 +1,5 @@
 <?php
+
 namespace application\controllers;
 
 use application\core\Controller;
@@ -9,7 +10,7 @@ class MainController extends Controller
     {
         $result = $this->model->getUsers();
         $vars = [
-            'users'=> $result,
+            'users' => $result,
         ];
         $this->view->render('Main page', $vars);
     }
