@@ -13,7 +13,7 @@ class User extends Model
         'female' => 'Female',
     ];
 
-    public const STATUS = [
+    public const STATUSES = [
         'active' => 'Active',
         'inactive' => 'Inactive',
     ];
