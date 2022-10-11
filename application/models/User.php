@@ -55,7 +55,7 @@ class User extends Model
     public function getUserEmail(array $params = []): bool|array
     {
         $stmt = $this->db->dbo
-            ->prepare('SELECT count(*) as count FROM users WHERE email = :email');
+            ->prepare('SELECT count(*) as total FROM users WHERE email = :email');
         $stmt->execute($params);
 
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -63,6 +63,6 @@ class User extends Model
         if (!$result) {
             View::errorCode(404);
         }
-        return $result;
+        return $result[0];
     }
 }

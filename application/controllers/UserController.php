@@ -94,7 +94,7 @@ class UserController extends Controller
             'status' => $_POST["status"],
         ];
         $row = $this->model->getUserEmail(['email' => $_POST["email"]]);
-        $members = $row['count'];
+        $members = $row['total'];
         if (!filter_var($params["email"], FILTER_VALIDATE_EMAIL)) {
             $_SESSION["message"] = "Email is not valid.";
             return false;
