@@ -6,7 +6,7 @@ use application\core\Controller;
 
 class MainController extends Controller
 {
-    public function indexAction()
+    public function indexAction(): void
     {
         $result = $this->model->getUsers();
         $vars = [

@@ -2,13 +2,11 @@
 
 namespace application\core;
 
-use application\core\View;
 
 class Router
 {
-
-    protected $routes = [];
-    protected $params = [];
+    protected array $routes = [];
+    protected array $params = [];
 
     public function __construct()
     {
@@ -18,13 +16,13 @@ class Router
         }
     }
 
-    public function add($route, $params)
+    public function add($route, $params): void
     {
         $route = '#^' . $route . '$#';
         $this->routes[$route] = $params;
     }
 
-    public function match()
+    public function match(): bool
     {
         $urlPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $url = trim($urlPath, '/');
@@ -37,9 +35,8 @@ class Router
         return false;
     }
 
-    public function run()
+    public function run(): void
     {
-
         if ($this->match()) {
             $path = 'application\controllers\\' . ucfirst($this->params['controller']) . 'Controller';
             if (class_exists($path)) {

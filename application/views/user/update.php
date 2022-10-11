@@ -29,7 +29,7 @@
                 </p>
                 <p>
                     <select name="status">
-                        <?php foreach (\application\models\User::STATUS as $statusValue => $statusName): ?>
+                        <?php foreach (\application\models\User::STATUSES as $statusValue => $statusName): ?>
                             <option value="<?php echo $statusValue; ?>"><?php echo $statusName; ?></option>
                         <?php endforeach; ?>
                     </select>

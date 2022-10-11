@@ -3,7 +3,7 @@
 namespace application\controllers;
 
 use application\core\Controller;
-use PDO;
+use JetBrains\PhpStorm\NoReturn;
 
 class UserController extends Controller
 {
@@ -12,7 +12,7 @@ class UserController extends Controller
      *
      * @return void
      */
-    public function createAction()
+    public function createAction(): void
     {
         $this->view->render('Add page');
     }
@@ -22,7 +22,7 @@ class UserController extends Controller
      *
      * @return void
      */
-    public function addAction()
+    #[NoReturn] public function addAction(): void
     {
         if (!$this->validatePostData()) {
             $this->view->redirect('/user/create');
@@ -44,7 +44,7 @@ class UserController extends Controller
      *
      * @return void
      */
-    public function updateAction()
+    public function updateAction(): void
     {
         $queryParams = $this->getQueryParams();
         $result = $this->model->getUserParam($queryParams);
@@ -60,7 +60,7 @@ class UserController extends Controller
      *
      * @return void
      */
-    public function editAction()
+    #[NoReturn] public function editAction(): void
     {
         if (!$this->validatePostData()) {
             $this->view->redirect('/user/update');
@@ -78,7 +78,7 @@ class UserController extends Controller
         $this->view->redirect('/');
     }
 
-    public function deleteAction()
+    #[NoReturn] public function deleteAction(): void
     {
         $queryParams = $this->getQueryParams();
         $this->model->deleteUser($queryParams);

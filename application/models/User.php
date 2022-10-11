@@ -18,16 +18,16 @@ class User extends Model
         'inactive' => 'Inactive',
     ];
 
-    public function addUser($params = [])
+    public function addUser(array $params = []): void
     {
-        $this->db->db
+        $this->db->dbo
             ->prepare('INSERT INTO task.users (email, name, gender, status) VALUES (:email, :name, :gender, :status)')
             ->execute($params);
     }
 
-    public function getUserParam($params = [])
+    public function getUserParam(array $params = []): bool|array
     {
-        $stmt = $this->db->db
+        $stmt = $this->db->dbo
             ->prepare('SELECT * FROM users WHERE email = :email');
         $stmt->execute($params);
 
@@ -40,21 +40,21 @@ class User extends Model
         return $result;
     }
 
-    public function updateUser($params = [])
+    public function updateUser(array $params = []): void
     {
-        $this->db->db
+        $this->db->dbo
             ->prepare('UPDATE users SET email = :email, name = :name, gender = :gender, status = :status WHERE email = :emailOld')
             ->execute($params);
     }
 
-    public function deleteUser($params = [])
+    public function deleteUser(array $params = []): void
     {
-        $this->db->db->prepare('DELETE FROM users WHERE email = :email')->execute($params);
+        $this->db->dbo->prepare('DELETE FROM users WHERE email = :email')->execute($params);
     }
 
-    public function getUserEmail($params = [])
+    public function getUserEmail(array $params = []): bool|array
     {
-        $stmt = $this->db->db
+        $stmt = $this->db->dbo
             ->prepare('SELECT count(*) as count FROM users WHERE email = :email');
         $stmt->execute($params);
 
@@ -63,7 +63,6 @@ class User extends Model
         if (!$result) {
             View::errorCode(404);
         }
-
         return $result;
     }
 }

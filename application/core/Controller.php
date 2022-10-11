@@ -2,23 +2,20 @@
 
 namespace application\core;
 
-use application\core\View;
-
 abstract class Controller
 {
+    public array $route;
+    public View $view;
+    public mixed $model;
 
-    public $route;
-    public $view;
-    public $model;
-
-    public function __construct($route)
+    public function __construct(array $route)
     {
         $this->route = $route;
         $this->view = new View($route);
         $this->model = $this->loadModel($route['controller']);
     }
 
-    public function loadModel($name)
+    public function loadModel(string $name): mixed
     {
         $path = 'application\models\\' . ucfirst($name);
         if (class_exists($path)) {

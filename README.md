@@ -32,3 +32,5 @@ into separate files.
 Logic files should contain PHP code only.
 Use separate CSS files for styles.
 You must also create either a database dump or write sids/migrations
+
+This application was developed using PHP 8.1, used to start nginx

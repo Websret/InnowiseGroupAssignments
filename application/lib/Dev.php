@@ -1,9 +1,11 @@
 <?php
 
+use JetBrains\PhpStorm\NoReturn;
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-function debug($str)
+#[NoReturn] function debug(string $str): void
 {
     echo "<pre>var_dump($str);</pre>";
     exit;

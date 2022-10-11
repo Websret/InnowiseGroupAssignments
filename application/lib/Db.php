@@ -6,18 +6,17 @@ use PDO;
 
 class Db
 {
-
-    public PDO $db;
+    public PDO $dbo;
 
     public function __construct()
     {
         $config = require 'application/config/db.php';
-        $this->db = new PDO('mysql:host=' . $config['host'] . ';dbname=' . $config['dbname'] . '', $config['user'], $config['password']);
+        $this->dbo = new PDO('mysql:host=' . $config['host'] . ';dbname=' . $config['dbname'], $config['user'], $config['password']);
     }
 
-    public function query($sql, $params = [])
+    public function query(string $sql, array $params = []): bool|\PDOStatement
     {
-        $statment = $this->db->prepare($sql);
+        $statment = $this->dbo->prepare($sql);
         if (!empty($params)) {
             foreach ($params as $key => $val) {
                 $statment->bindValue(':' . $key, $val);
@@ -27,13 +26,13 @@ class Db
         return $statment;
     }
 
-    public function row($sql, $params = [])
+    public function row(string $sql, array $params = []): bool|array
     {
         $result = $this->query($sql);
         return $result->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function column($sql, $params = [])
+    public function column(string $sql, array $params = []): bool|array
     {
         $result = $this->query($sql);
         return $result->fetchColumn();
