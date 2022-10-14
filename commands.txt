@@ -1,0 +1,7 @@
+cd /etc/nginx/sites-available
+sudo nano {filename.conf}
+cd /etc/nginx/sites-enabled
+sudo ln -s ../sites-available/{filename.conf}
+
+cd /etc/
+sudo nano hosts (add ip and name localhost)
