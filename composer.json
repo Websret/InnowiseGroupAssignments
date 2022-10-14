@@ -1,0 +1,15 @@
+{
+    "name": "user/task14",
+    "authors": [
+        {
+            "name": "Websret",
+            "email": "2244224422az@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Application\\": "Application/"
+        }
+    }
+}
