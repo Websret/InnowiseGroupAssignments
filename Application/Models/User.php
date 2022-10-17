@@ -18,6 +18,11 @@ class User extends Model
         'inactive' => 'Inactive',
     ];
 
+    public function getUsers(): bool|array
+    {
+        return $this->link->request(RequestMethods::GET);
+    }
+
     public function addUser(array $params = []): void
     {
         $this->link->request(RequestMethods::POST, $params);

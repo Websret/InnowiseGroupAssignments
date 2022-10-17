@@ -29,7 +29,7 @@ class Router
 
     public function checkPages($internalRoute): array
     {
-        $uri = $internalRoute == "main/index" ? $internalRoute : $this->getURI();
+        $uri = $internalRoute == "user/index" ? $internalRoute : $this->getURI();
         return explode('/', $uri);
     }
 

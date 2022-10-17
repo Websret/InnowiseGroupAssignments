@@ -3,10 +3,18 @@
 namespace Application\Controllers;
 
 use Application\Core\Controller;
-use Application\Enums\RequestMethods;
 
 class UserController extends Controller
 {
+    public function indexAction()
+    {
+        $result = $this->model->getUsers();
+        $vars = [
+            'users' => $result,
+        ];
+        $this->view->render('Users page', $vars);
+    }
+
     /**
      * Render form
      *
