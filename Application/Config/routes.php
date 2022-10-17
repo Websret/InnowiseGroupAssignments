@@ -2,12 +2,10 @@
 
 return [
     'user/create' => 'user/create',
-    'user/update' => 'user/update',
     'user/add' => 'user/add',
     'user/edit' => 'user/edit',
     'user/delete' => 'user/delete',
     'user/update/([0-9]+)' => 'user/update',
     '' => 'main/index',
-//    'user/([a-z]+)/([0-9]+)' => 'user/update/$1/$2',
-//    'user/([0-9]+)/update' => 'user/update',
+    'user/([a-z]+)/([0-9]+)' => 'user/update/$1/$2',
 ];

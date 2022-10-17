@@ -22,10 +22,4 @@ abstract class Controller
             return new $path;
         }
     }
-
-    protected function getQueryParams(): array
-    {
-        $rawParams = end($this->route);
-        return ['id' => $rawParams];
-    }
 }

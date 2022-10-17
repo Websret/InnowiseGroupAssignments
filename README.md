@@ -34,3 +34,5 @@ Use separate CSS files for styles.
 You must also create either a database dump or write sids/migrations
 
 This application was developed using PHP 8.1, used to start nginx
+Need to create a file .env and specify a key = de76c7491276349da2ce4b942cfc6a159e6a26f09cf124f0247ca38a8977e942
+Install composer file

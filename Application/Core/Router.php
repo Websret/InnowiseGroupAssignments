@@ -6,10 +6,11 @@ class Router
 {
     private array $routes = [];
 
+    private const ROUTES_PATH = 'Application/Config/routes.php';
+
     public function __construct()
     {
-        $routesPath = 'Application/Config/routes.php';
-        $this->routes = include($routesPath);
+        $this->routes = include(self::ROUTES_PATH);
     }
 
     public function getURI(): string|bool
@@ -26,13 +27,24 @@ class Router
         }
     }
 
+    public function checkPages($internalRoute): array
+    {
+        $uri = $internalRoute == "main/index" ? $internalRoute : $this->getURI();
+        return explode('/', $uri);
+    }
+
+    public function getParams($segments, $controllerObject, $actionName): void
+    {
+        empty($segments) ? $controllerObject->$actionName() : $controllerObject->$actionName($segments);
+    }
+
     public function run(): void
     {
         $uri = $this->getURI();
         foreach ($this->routes as $uriPattern => $path) {
             if (preg_match("~$uriPattern~", $uri)) {
                 $internalRoute = preg_replace("~$uriPattern~", $path, $uri);
-                $segments = explode('/', $internalRoute);
+                $segments = $this->checkPages($internalRoute);
                 $parameters = $segments;
                 $controllerName = ucfirst(array_shift($segments)) . 'Controller';
                 $actionName = array_shift($segments) . 'Action';
@@ -42,7 +54,7 @@ class Router
 
                 if (file_exists('Application/Controllers/' . $controllerName . '.php')) {
                     $controllerObject = new $controllerFile($parameters);
-                    $controllerObject->$actionName();
+                    $this->getParams($segments, $controllerObject, $actionName);
                     break;
                 }
             }

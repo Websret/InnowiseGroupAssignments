@@ -43,9 +43,9 @@ class UserController extends Controller
      *
      * @return void
      */
-    public function updateAction(): void
+    public function updateAction($data): void
     {
-        $queryParams = $this->getQueryParams();
+        $queryParams = ["id" => $data[0]];
         $result = $this->model->getUserParam($queryParams);
         $vars = [
             'user' => $result,
@@ -77,9 +77,9 @@ class UserController extends Controller
         $this->view->redirect('/');
     }
 
-    public function deleteAction(): void
+    public function deleteAction($data): void
     {
-        $queryParams = $this->getQueryParams();
+        $queryParams = ["id" => $data[0]];
         $this->model->deleteUser($queryParams);
         $this->view->redirect('/');
     }
