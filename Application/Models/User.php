@@ -20,12 +20,12 @@ class User extends Model
 
     public function addUser(array $params = []): void
     {
-        $this->link->postRequest($params);
+        $this->link->request(RequestMethods::POST, $params);
     }
 
     public function getUserParam(array $params = []): array
     {
-        $result = $this->link->getRequest($params);
+        $result = $this->link->request(RequestMethods::GET, $params);
 
         if (!$result) {
             View::errorCode(404);
@@ -41,6 +41,6 @@ class User extends Model
 
     public function deleteUser(array $params = []): void
     {
-        $this->link->deleteRequest($params);
+        $this->link->request(RequestMethods::DELETE ,$params);
     }
 }
