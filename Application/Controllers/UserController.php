@@ -90,8 +90,6 @@ class UserController extends Controller
         $params = [
             'email' => $_POST["email"],
             'name' => $_POST["name"],
-            'gender' => $_POST["gender"],
-            'status' => $_POST["status"],
         ];
         if (!filter_var($params["email"], FILTER_VALIDATE_EMAIL)) {
             $_SESSION["message"] = "Email is not valid.";
