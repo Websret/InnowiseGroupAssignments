@@ -2,7 +2,7 @@
 
 namespace Application\Lib;
 
-use Application\Lib\RequestMethods;
+use Application\Enums\RequestMethods;
 
 class RestApi
 {
