@@ -20,36 +20,16 @@ class RestApi
         return $result;
     }
 
-    public function request(RequestMethods $method, ?array $params): array
+    public function request(RequestMethods $method, array $params = []): array
     {
         $context = stream_context_create($this->options($method, $params));
-        $result = file_get_contents($this->query($params), false, $context);
+        if ($method == RequestMethods::GET or $method == RequestMethods::POST){
+            $result = file_get_contents($this->query(), false, $context);
+        } else {
+            $result = file_get_contents($this->query($params), false, $context);
+        }
+
         return (array)json_decode($result);
-    }
-
-    public function getRequest(array $params = []): array
-    {
-        $context = stream_context_create($this->options(RequestMethods::GET, $params));
-        $result = file_get_contents($this->query(), false, $context);
-        return json_decode($result);
-    }
-
-    public function postRequest(array $params = []): void
-    {
-        $context = stream_context_create($this->options(RequestMethods::POST, $params));
-        file_get_contents($this->query(), false, $context);
-    }
-
-    public function patchRequest(array $params = []): void
-    {
-        $context = stream_context_create($this->options(RequestMethods::PATCH, $params));
-        file_get_contents($this->query($params), false, $context);
-    }
-
-    public function deleteRequest(array $params = []): void
-    {
-        $context = stream_context_create($this->options(RequestMethods::DELETE, $params));
-        file_get_contents($this->query($params), false, $context);
     }
 
     private function options(RequestMethods $method, array $params): array
