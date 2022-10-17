@@ -3,6 +3,7 @@
 namespace Application\Controllers;
 
 use Application\Core\Controller;
+use Application\Enums\RequestMethods;
 
 class UserController extends Controller
 {

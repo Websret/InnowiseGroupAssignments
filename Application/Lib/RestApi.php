@@ -20,6 +20,13 @@ class RestApi
         return $result;
     }
 
+    public function request(RequestMethods $method, ?array $params): array
+    {
+        $context = stream_context_create($this->options($method, $params));
+        $result = file_get_contents($this->query($params), false, $context);
+        return (array)json_decode($result);
+    }
+
     public function getRequest(array $params = []): array
     {
         $context = stream_context_create($this->options(RequestMethods::GET, $params));

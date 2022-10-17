@@ -4,6 +4,7 @@ namespace Application\Models;
 
 use Application\Core\Model;
 use Application\Core\View;
+use Application\Enums\RequestMethods;
 
 class User extends Model
 {
@@ -35,7 +36,7 @@ class User extends Model
 
     public function updateUser(array $params = []): void
     {
-        $this->link->patchRequest($params);
+        $this->link->request(RequestMethods::PATCH, $params);
     }
 
     public function deleteUser(array $params = []): void
