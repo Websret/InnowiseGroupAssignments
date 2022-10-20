@@ -1,38 +1,17 @@
-Task 13. Create a form for working with users using MVC, the data source is a MySQL database
+Task 15. Create file upload HTML form and allow users to upload files to the server
 
-Useful materials:
-https://www.youtube.com/playlist?list=PLqQ1VsG-wgxfUc8pKsv7MBSbp5Q3zFLi4
-https://blog.pusher.com/laravel-mvc-use/
-https://www.duplicatetransaction.com/mvc-design-pattern-with-a-php-example/
-https://w3codegenerator.com/article/how-to-display-select-option-of-select-tag-as-selected-using-foreach-method-in-php
-
-
-
-
-In the developed application, you must be able to add new users, edit
-user data, delete users, view the list of all users. You design the
-interface of the application and the structure of the MySQL database
-yourself.
-Use the following data to work with users
-email field "Email", name="email" - key field
-text field "Your first and last name", name="name"
-drop-down list "Gender" ( male, female ), name="gender"
-drop-down list "Status" ( active, inactive ), name="status"
-
-Prerequisites:
-use Bootstrap
-store data in MySQL
-make checks for field completeness and data correctness using JS and PHP
-
-When we start editing user data, the editable fields must be pre-filled
-with current data. For the "Delete" button, add a deletion confirmation
-using javascript code.
-You should implement this application in OOP. Split logic and templates
-into separate files.
-Logic files should contain PHP code only.
+Create an upload file field. Perform client-side validation of the file size (use any implementation
+you know) and allow only text files and images.
+When the file is uploaded, check if its format matches the above file types. If the file does not match the formats, reject it and show a message to the user. If it's not, check if your storage has enough space to save files. If it has not, show a message to the user. If yes, move the file to the 'uploads' folder inside your web root directory. Check if the folder exists. If it does not, create it first. Use '@'to create a directory. Answer in code comment, why you use '@'.
+Under the file upload form a list of all files from the folder 'uploads' should be displayed
+Get file info: file size, file name, file meta information (for images) and send it to the front-end as the response of the upload action and show to the user in a user-friendly way.
+Also, when downloading each file, you must write a log file. Place the log file in the /logs folder.
+Every day it is necessary to create a new log file. The format of the log file name is "upload_ddmmyyyy.log". Information about each attempt to upload a file to the server must be entered in the log file. Therefore, the log file must contain the Date, Time, file name, file size, information about whether the file was uploaded successfully (if it is not uploaded, then you need to write the reason to the log file).
+You should implement this application in OOP. Split logic and templates into separate files.
+Logic files should contain PHP code only, while templates should contain only HTML and JS.
 Use separate CSS files for styles.
-You must also create either a database dump or write sids/migrations
+For the View part you must use the Twig Template Engine, loaded through Composer
+Tags:  PHP, OOP, MVC, Bootstrap, Twig, Composer, HTML, CSS, JS, GIT
 
 This application was developed using PHP 8.1, used to start nginx
-Need to create a file .env and specify a key = de76c7491276349da2ce4b942cfc6a159e6a26f09cf124f0247ca38a8977e942
 Install composer file

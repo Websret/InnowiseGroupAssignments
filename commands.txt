@@ -5,3 +5,7 @@ sudo ln -s ../sites-available/{filename.conf}
 
 cd /etc/
 sudo nano hosts (add ip and name localhost)
+
+How to watch error log nginx
+cd /var/log/nginx/
+cat error.log

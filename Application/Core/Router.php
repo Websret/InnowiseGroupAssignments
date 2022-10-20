@@ -27,13 +27,13 @@ class Router
         }
     }
 
-    public function checkPages($internalRoute): array
+    public function checkPages(string $internalRoute): array
     {
-        $uri = $internalRoute == "user/index" ? $internalRoute : $this->getURI();
+        $uri = $internalRoute == "main/index" ? $internalRoute : $this->getURI();
         return explode('/', $uri);
     }
 
-    public function getParams($segments, $controllerObject, $actionName): void
+    public function getParams(array $segments, object $controllerObject, string $actionName): void
     {
         empty($segments) ? $controllerObject->$actionName() : $controllerObject->$actionName($segments);
     }

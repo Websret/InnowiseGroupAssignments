@@ -2,14 +2,14 @@
 
 namespace Application\Core;
 
-use Application\Lib\RestApi;
+use Application\Lib\FileSystem;
 
 abstract class Model
 {
-    public RestApi $link;
+    public FileSystem $link;
 
     public function __construct()
     {
-        $this->link = new RestApi;
+        $this->link = new FileSystem;
     }
 }

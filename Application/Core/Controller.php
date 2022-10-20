@@ -5,7 +5,9 @@ namespace Application\Core;
 abstract class Controller
 {
     public array $route;
+
     public View $view;
+
     public mixed $model;
 
     public function __construct(array $route)

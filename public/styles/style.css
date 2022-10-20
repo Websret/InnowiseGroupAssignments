@@ -31,7 +31,6 @@ table td {
     text-align: center;
     line-height: 16px;
     vertical-align: middle;
-    font-size: 12px;
 }
 
 table tbody tr:nth-child(odd) td {
