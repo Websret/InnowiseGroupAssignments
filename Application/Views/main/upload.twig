@@ -1,0 +1,38 @@
+{% extends "layouts/default.twig" %}
+
+{% block title %}Upload page{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-4">
+            <H1>Upload page</H1>
+        </div>
+        <table>
+            <thead>
+            <tr>
+                <th>Message</th>
+                <th>File name</th>
+                <th>File size</th>
+                <th>Metadata</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for data in dataArray %}
+                <tr>
+                    <td>{{ data.message }}</td>
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.size }}</td>
+                    <td>{{ data.metadata|nl2br }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a href="/" align="center">
+            <button type="submit" class="btn btn-danger">
+                Back page
+                <span class="glyphicon glyphicon-send"></span>
+            </button>
+        </a>
+    </div>
+{% endblock %}
+

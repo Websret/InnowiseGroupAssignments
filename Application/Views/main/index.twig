@@ -1,0 +1,40 @@
+{% extends "layouts/default.twig" %}
+
+{% block title %}Main page{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-4">
+            <H1>Main page</H1>
+        </div>
+
+        <form method="post" action="/main/upload" enctype="multipart/form-data">
+            <input class="w-75 p-1" type="file" name="filename" multiple="multiple">
+
+            <button type="submit" class="btn btn-warning" id="butsave" name="submit">
+                Submit
+                <span class="glyphicon glyphicon-send"></span>
+            </button>
+        </form>
+
+        <div class="row g-3">
+            <H4>Files from directory 'uploads'</H4>
+            <table>
+                <thead>
+                <tr>
+                    <th class="col-1">#</th>
+                    <th>File name</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for file in fileArray %}
+                    <tr>
+                        <td>{{ file.id }}</td>
+                        <td>{{ file.filename }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
