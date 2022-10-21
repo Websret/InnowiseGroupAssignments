@@ -6,6 +6,8 @@ class FileSystem
 {
     private const PATH = 'uploads/';
 
+    private const MAX_FILE_SIZE = 2000000;
+
     private static string $message;
 
     private static string $fileLog;
@@ -28,20 +30,17 @@ class FileSystem
 
     public static function uploadFile(): array
     {
-        (new FileSystem)->checkDirectory();
-        (new FileSystem)->createLogFile();
+        $fileSystem = new FileSystem;
+        $fileSystem->checkDirectory();
+        $fileSystem->createLogFile();
 
-        $fileType = (new FileSystem)->checkFileType($_FILES['filename']['type']);
-        $freeSpace = (new FileSystem)->checkDiskFreeSpace($_FILES['filename']['size']);
-        $fileExist = (new FileSystem)->fileExist($_FILES['filename']['name']);
-        $fileSize = (new FileSystem)->checkFileSize($_FILES['filename']['size']);
+        $fileType = $fileSystem->checkFileType($_FILES['filename']['type']);
+        $freeSpace = $fileSystem->checkDiskFreeSpace($_FILES['filename']['size']);
+        $fileExist = $fileSystem->fileExist($_FILES['filename']['name']);
+        $fileSize = $fileSystem->checkFileSize($_FILES['filename']['size']);
 
         if ($fileType and $freeSpace and $fileExist and $fileSize) {
-            if (move_uploaded_file($_FILES['filename']['tmp_name'], self::PATH . $_FILES['filename']['name'])) {
-                self::$message = "Success, files upload";
-            } else {
-                self::$message = "Failed, files not upload";
-            }
+            $fileSystem->moveUploadedFile();
         }
 
         $data = [
@@ -49,11 +48,18 @@ class FileSystem
                 "message" => self::$message,
                 "name" => $_FILES['filename']['name'],
                 "size" => round($_FILES['filename']['size'] / 1024 / 1024, 2) . 'mb',
-                "metadata" => (new FileSystem)->hasMetadata(self::PATH . $_FILES['filename']['name']),
+                "metadata" => $fileSystem->hasMetadata(self::PATH . $_FILES['filename']['name']),
             ],
         ];
-        (new FileSystem)->writeLogFile($data);
+        $fileSystem->writeLogFile($data);
+
         return $data;
+    }
+
+    private function moveUploadedFile(): void
+    {
+        $isMoved = move_uploaded_file($_FILES['filename']['tmp_name'], self::PATH . $_FILES['filename']['name']);
+        self::$message = $isMoved ? "Success, files upload" : "Failed, files not upload";
     }
 
     private function checkDirectory(): void
@@ -145,7 +151,7 @@ class FileSystem
 
     private function checkFileSize(int $fileSize): bool
     {
-        if ($fileSize > 2000000){
+        if ($fileSize > self::MAX_FILE_SIZE){
             self::$message = "File size too large";
             return false;
         }
