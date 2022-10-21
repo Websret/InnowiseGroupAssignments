@@ -83,6 +83,20 @@ class FileSystem
         return $messageLog . "\n";
     }
 
+    private function fileExist(string $filename): bool
+    {
+        $fileArray = $this->getFiles();
+        foreach ($fileArray as $item) {
+            foreach ($item as $value) {
+                if ($value == $filename) {
+                    self::$message = "File with this name exist";
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public function getFiles(): array
     {
         $fileArray = [];
@@ -106,8 +120,9 @@ class FileSystem
 
         $fileType = (new FileSystem)->checkFileType($_FILES['filename']['type']);
         $freeSpace = (new FileSystem)->checkDiskFreeSpace($_FILES['filename']['size']);
+        $fileExist = (new FileSystem)->fileExist($_FILES['filename']['name']);
 
-        if ($fileType and $freeSpace) {
+        if ($fileType and $freeSpace and $fileExist) {
             if (move_uploaded_file($_FILES['filename']['tmp_name'], self::PATH . $_FILES['filename']['name'])) {
                 self::$message = "Success, files upload";
             } else {
