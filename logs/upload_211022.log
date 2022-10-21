@@ -4,3 +4,111 @@
 21-10-22 10:20; Success, files upload; commands.txt; 183; Not found metadata; 
 21-10-22 10:22; File with this name exist.; commands.txt; 183; Not found metadata; 
 21-10-22 10:23; Success, files upload; Screenshot from 2022-10-19 10-58-03 (copy).png; 433408; Not found metadata; 
+21-10-22 11:28; File type is not text and not image; composer.json; 268; Not found metadata; 
+21-10-22 11:46; File type is not text and not image; ; 0; Not found metadata; 
+21-10-22 12:03; File type is not text and not image; ; 0; Not found metadata; 
+21-10-22 12:03; File with this name exist; commands.txt; 183; Not found metadata; 
+21-10-22 12:03; File with this name exist; commands.txt; 183; Not found metadata; 
+21-10-22 12:04; File with this name exist; commands.txt; 183; Not found metadata; 
+21-10-22 12:04; File with this name exist; commands.txt; 183; Not found metadata; 
+21-10-22 12:07; File with this name exist; photo-1606115915090-be18fea23ec7.jpeg; 331729; FILE.FileName: photo-1606115915090-be18fea23ec7.jpeg FILE.FileDateTime: 1666262740 FILE.FileSize: 331729 FILE.FileType: 2 FILE.MimeType: image/jpeg FILE.SectionsFound:  COMPUTED.html: width="1000" height="1250" COMPUTED.Height: 1250 COMPUTED.Width: 1000 COMPUTED.IsColor: 1 ; 
+21-10-22 12:08; File with this name exist; photo-1606115915090-be18fea23ec7.jpeg; 331729; FILE.FileName: photo-1606115915090-be18fea23ec7.jpeg 
+FILE.FileDateTime: 1666262740 
+FILE.FileSize: 331729 
+FILE.FileType: 2 
+FILE.MimeType: image/jpeg 
+FILE.SectionsFound:  
+COMPUTED.html: width="1000" height="1250" 
+COMPUTED.Height: 1250 
+COMPUTED.Width: 1000 
+COMPUTED.IsColor: 1 
+; 
+21-10-22 12:08; File with this name exist; photo-1606115915090-be18fea23ec7.jpeg; 331729; FILE.FileName: photo-1606115915090-be18fea23ec7.jpeg </br>FILE.FileDateTime: 1666262740 </br>FILE.FileSize: 331729 </br>FILE.FileType: 2 </br>FILE.MimeType: image/jpeg </br>FILE.SectionsFound:  </br>COMPUTED.html: width="1000" height="1250" </br>COMPUTED.Height: 1250 </br>COMPUTED.Width: 1000 </br>COMPUTED.IsColor: 1 </br>; 
+21-10-22 12:45; File size too large; photo-1606115915090-be18fea23ec7.jpeg; 331729; FILE.FileName: photo-1606115915090-be18fea23ec7.jpeg FILE.FileDateTime: 1666262740 FILE.FileSize: 331729 FILE.FileType: 2 FILE.MimeType: image/jpeg FILE.SectionsFound:  COMPUTED.html: width="1000" height="1250" COMPUTED.Height: 1250 COMPUTED.Width: 1000 COMPUTED.IsColor: 1 ; 
+21-10-22 12:47; File size too large; composer.phar; 2801573; Not found metadata; 
+21-10-22 12:48; File size too large; composer.phar; 2.67; Not found metadata; 
+21-10-22 12:48; File size too large; composer.phar; 2.67mb; Not found metadata; 
+21-10-22 12:50; Success, files upload; photo-1606115915090-be18fea23ec7 (copy).jpeg; 0.32mb; FILE.FileName: photo-1606115915090-be18fea23ec7 (copy).jpeg FILE.FileDateTime: 1666349454 FILE.FileSize: 331729 FILE.FileType: 2 FILE.MimeType: image/jpeg FILE.SectionsFound:  COMPUTED.html: width="1000" height="1250" COMPUTED.Height: 1250 COMPUTED.Width: 1000 COMPUTED.IsColor: 1 ; 
+21-10-22 12:51; File with this name exist; photo-1606115915090-be18fea23ec7 (copy).jpeg; 0.32mb; FILE.FileName: photo-1606115915090-be18fea23ec7 (copy).jpeg 
+FILE.FileDateTime: 1666349454 
+FILE.FileSize: 331729 
+FILE.FileType: 2 
+FILE.MimeType: image/jpeg 
+FILE.SectionsFound:  
+COMPUTED.html: width="1000" height="1250" 
+COMPUTED.Height: 1250 
+COMPUTED.Width: 1000 
+COMPUTED.IsColor: 1 
+; 
+21-10-22 12:51; File with this name exist; photo-1606115915090-be18fea23ec7 (copy).jpeg; 0.32mb; FILE.FileName: photo-1606115915090-be18fea23ec7 (copy).jpeg
+FILE.FileDateTime: 1666349454
+FILE.FileSize: 331729
+FILE.FileType: 2
+FILE.MimeType: image/jpeg
+FILE.SectionsFound: 
+COMPUTED.html: width="1000" height="1250"
+COMPUTED.Height: 1250
+COMPUTED.Width: 1000
+COMPUTED.IsColor: 1
+; 
+21-10-22 12:53; File with this name exist; photo-1606115915090-be18fea23ec7 (copy).jpeg; 0.32mb; 
+FILE.FileName: photo-1606115915090-be18fea23ec7 (copy).jpeg FILE.FileDateTime: 1666349454 FILE.FileSize: 331729 FILE.FileType: 2 FILE.MimeType: image/jpeg FILE.SectionsFound:  COMPUTED.html: width="1000" height="1250" COMPUTED.Height: 1250 COMPUTED.Width: 1000 COMPUTED.IsColor: 1 ; 
+21-10-22 12:53; File with this name exist; photo-1606115915090-be18fea23ec7 (copy).jpeg; 0.32mb; 
+FILE.FileName: photo-1606115915090-be18fea23ec7 (copy).jpeg FILE.FileDateTime: 1666349454 FILE.FileSize: 331729 FILE.FileType: 2 FILE.MimeType: image/jpeg FILE.SectionsFound:  COMPUTED.html: width="1000" height="1250" COMPUTED.Height: 1250 COMPUTED.Width: 1000 COMPUTED.IsColor: 1 ; 
+21-10-22 12:53; File with this name exist; photo-1606115915090-be18fea23ec7 (copy).jpeg; 0.32mb; FILE.FileName: photo-1606115915090-be18fea23ec7 (copy).jpeg 
+FILE.FileDateTime: 1666349454 
+FILE.FileSize: 331729 
+FILE.FileType: 2 
+FILE.MimeType: image/jpeg 
+FILE.SectionsFound:  
+COMPUTED.html: width="1000" height="1250" 
+COMPUTED.Height: 1250 
+COMPUTED.Width: 1000 
+COMPUTED.IsColor: 1 
+; 
+21-10-22 12:54; File with this name exist; photo-1606115915090-be18fea23ec7 (copy).jpeg; 0.32mb; FILE.FileName: photo-1606115915090-be18fea23ec7 (copy).jpeg <br>FILE.FileDateTime: 1666349454 <br>FILE.FileSize: 331729 <br>FILE.FileType: 2 <br>FILE.MimeType: image/jpeg <br>FILE.SectionsFound:  <br>COMPUTED.html: width="1000" height="1250" <br>COMPUTED.Height: 1250 <br>COMPUTED.Width: 1000 <br>COMPUTED.IsColor: 1 <br>; 
+21-10-22 12:54; File with this name exist; photo-1606115915090-be18fea23ec7 (copy).jpeg; 0.32mb; FILE.FileName: photo-1606115915090-be18fea23ec7 (copy).jpeg \nFILE.FileDateTime: 1666349454 \nFILE.FileSize: 331729 \nFILE.FileType: 2 \nFILE.MimeType: image/jpeg \nFILE.SectionsFound:  \nCOMPUTED.html: width="1000" height="1250" \nCOMPUTED.Height: 1250 \nCOMPUTED.Width: 1000 \nCOMPUTED.IsColor: 1 \n; 
+21-10-22 12:54; File with this name exist; photo-1606115915090-be18fea23ec7 (copy).jpeg; 0.32mb; FILE.FileName: photo-1606115915090-be18fea23ec7 (copy).jpeg 
+FILE.FileDateTime: 1666349454 
+FILE.FileSize: 331729 
+FILE.FileType: 2 
+FILE.MimeType: image/jpeg 
+FILE.SectionsFound:  
+COMPUTED.html: width="1000" height="1250" 
+COMPUTED.Height: 1250 
+COMPUTED.Width: 1000 
+COMPUTED.IsColor: 1 
+; 
+21-10-22 12:55; File with this name exist; photo-1606115915090-be18fea23ec7 (copy).jpeg; 0.32mb; FILE.FileName: photo-1606115915090-be18fea23ec7 (copy).jpeg <br />
+FILE.FileDateTime: 1666349454 <br />
+FILE.FileSize: 331729 <br />
+FILE.FileType: 2 <br />
+FILE.MimeType: image/jpeg <br />
+FILE.SectionsFound:  <br />
+COMPUTED.html: width="1000" height="1250" <br />
+COMPUTED.Height: 1250 <br />
+COMPUTED.Width: 1000 <br />
+COMPUTED.IsColor: 1 <br />
+; 
+21-10-22 12:56; File with this name exist; photo-1606115915090-be18fea23ec7 (copy).jpeg; 0.32mb; FILE.FileName: photo-1606115915090-be18fea23ec7 (copy).jpeg 
+<br />FILE.FileDateTime: 1666349454 
+<br />FILE.FileSize: 331729 
+<br />FILE.FileType: 2 
+<br />FILE.MimeType: image/jpeg 
+<br />FILE.SectionsFound:  
+<br />COMPUTED.html: width="1000" height="1250" 
+<br />COMPUTED.Height: 1250 
+<br />COMPUTED.Width: 1000 
+<br />COMPUTED.IsColor: 1 
+<br />; 
+21-10-22 12:56; File with this name exist; photo-1606115915090-be18fea23ec7 (copy).jpeg; 0.32mb; FILE.FileName: photo-1606115915090-be18fea23ec7 (copy).jpeg 
+FILE.FileDateTime: 1666349454 
+FILE.FileSize: 331729 
+FILE.FileType: 2 
+FILE.MimeType: image/jpeg 
+FILE.SectionsFound:  
+COMPUTED.html: width="1000" height="1250" 
+COMPUTED.Height: 1250 
+COMPUTED.Width: 1000 
+COMPUTED.IsColor: 1 
+; 

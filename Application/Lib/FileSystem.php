@@ -10,6 +10,52 @@ class FileSystem
 
     private static string $fileLog;
 
+    public function getFiles(): array
+    {
+        $fileArray = [];
+        $uploadsFiles = scandir(self::PATH);
+        $j = 1;
+        for ($i = 0; $i < count($uploadsFiles); $i++) {
+            if ($uploadsFiles[$i] != '.' and $uploadsFiles[$i] != '..') {
+                $fileArray[] = [
+                    'id' => $j++,
+                    'filename' => $uploadsFiles[$i],
+                ];
+            }
+        }
+        return $fileArray;
+    }
+
+    public static function uploadFile(): array
+    {
+        (new FileSystem)->checkDirectory();
+        (new FileSystem)->createLogFile();
+
+        $fileType = (new FileSystem)->checkFileType($_FILES['filename']['type']);
+        $freeSpace = (new FileSystem)->checkDiskFreeSpace($_FILES['filename']['size']);
+        $fileExist = (new FileSystem)->fileExist($_FILES['filename']['name']);
+        $fileSize = (new FileSystem)->checkFileSize($_FILES['filename']['size']);
+
+        if ($fileType and $freeSpace and $fileExist and $fileSize) {
+            if (move_uploaded_file($_FILES['filename']['tmp_name'], self::PATH . $_FILES['filename']['name'])) {
+                self::$message = "Success, files upload";
+            } else {
+                self::$message = "Failed, files not upload";
+            }
+        }
+
+        $data = [
+            "dataArray" => [
+                "message" => self::$message,
+                "name" => $_FILES['filename']['name'],
+                "size" => round($_FILES['filename']['size'] / 1024 / 1024, 2) . 'mb',
+                "metadata" => (new FileSystem)->hasMetadata(self::PATH . $_FILES['filename']['name']),
+            ],
+        ];
+        (new FileSystem)->writeLogFile($data);
+        return $data;
+    }
+
     private function checkDirectory(): void
     {
         if (!file_exists(self::PATH)) {
@@ -17,7 +63,7 @@ class FileSystem
         }
     }
 
-    private function checkDiskFreeSpace(string $fileSize): bool
+    private function checkDiskFreeSpace(int $fileSize): bool
     {
         if ($fileSize > disk_free_space(self::PATH)) {
             self::$message = "File size is larger than disk space!";
@@ -48,7 +94,7 @@ class FileSystem
         $metadata = "";
         foreach ($exif as $key => $section) {
             foreach ($section as $name => $value) {
-                $metadata = "$key.$name: $value ";
+                $metadata .= "$key.$name: $value\n";
             }
         }
         return $metadata;
@@ -97,48 +143,12 @@ class FileSystem
         return true;
     }
 
-    public function getFiles(): array
+    private function checkFileSize(int $fileSize): bool
     {
-        $fileArray = [];
-        $uploadsFiles = scandir(self::PATH);
-        $j = 1;
-        for ($i = 0; $i < count($uploadsFiles); $i++) {
-            if ($uploadsFiles[$i] != '.' and $uploadsFiles[$i] != '..') {
-                $fileArray[] = [
-                    'id' => $j++,
-                    'filename' => $uploadsFiles[$i],
-                ];
-            }
+        if ($fileSize > 2000000){
+            self::$message = "File size too large";
+            return false;
         }
-        return $fileArray;
-    }
-
-    public static function uploadFile(): array
-    {
-        (new FileSystem)->checkDirectory();
-        (new FileSystem)->createLogFile();
-
-        $fileType = (new FileSystem)->checkFileType($_FILES['filename']['type']);
-        $freeSpace = (new FileSystem)->checkDiskFreeSpace($_FILES['filename']['size']);
-        $fileExist = (new FileSystem)->fileExist($_FILES['filename']['name']);
-
-        if ($fileType and $freeSpace and $fileExist) {
-            if (move_uploaded_file($_FILES['filename']['tmp_name'], self::PATH . $_FILES['filename']['name'])) {
-                self::$message = "Success, files upload";
-            } else {
-                self::$message = "Failed, files not upload";
-            }
-        }
-
-        $data = [
-            "dataArray" => [
-                "message" => self::$message,
-                "name" => $_FILES['filename']['name'],
-                "size" => $_FILES['filename']['size'],
-                "metadata" => (new FileSystem)->hasMetadata(self::PATH . $_FILES['filename']['name']),
-            ],
-        ];
-        (new FileSystem)->writeLogFile($data);
-        return $data;
+        return true;
     }
 }

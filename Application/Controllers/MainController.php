@@ -23,6 +23,5 @@ class MainController extends Controller
             'dataArray' => $data,
         ];
         $this->view->render($vars);
-
     }
 }
