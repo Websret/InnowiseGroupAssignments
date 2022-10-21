@@ -8,6 +8,8 @@ class FileSystem
 
     private const MAX_FILE_SIZE = 2000000;
 
+    private const EXCEPTION_FILES = ['.', '..', '.gitignore'];
+
     private static string $message;
 
     private static string $fileLog;
@@ -17,11 +19,11 @@ class FileSystem
         $fileArray = [];
         $uploadsFiles = scandir(self::PATH);
         $j = 1;
-        for ($i = 0; $i < count($uploadsFiles); $i++) {
-            if ($uploadsFiles[$i] != '.' and $uploadsFiles[$i] != '..') {
+        foreach ($uploadsFiles as $value){
+            if (!in_array($value, self::EXCEPTION_FILES)){
                 $fileArray[] = [
                     'id' => $j++,
-                    'filename' => $uploadsFiles[$i],
+                    'filename' => $value,
                 ];
             }
         }
