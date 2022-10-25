@@ -9,7 +9,7 @@ class MainController extends Controller
     public function indexAction(): void
     {
         $data = $this->model->checkAuthorization();
-        if ($data[0] != '/'){
+        if ($data[0] != '/') {
             $this->view->redirect($data[0]);
         }
         $this->view->render($data[1]);
@@ -17,7 +17,6 @@ class MainController extends Controller
 
     public function loginAction(array $data = []): void
     {
-//        $data = $this->model->checkUsers($params);
         $this->view->render($data);
     }
 
@@ -28,14 +27,17 @@ class MainController extends Controller
             'password' => $_POST['password'],
         ];
         $data = $this->model->checkUsers($params);
+        if ($data[0] == '/') {
+            $this->view->redirect($data[0]);
+        }
         $this->view->path = '/main/login';
         $this->loginAction($data[1]);
-        $this->view->redirect($data[0]);
+
     }
 
-    public function exitAction(): void
+    public function logoutAction(): void
     {
-        $url = $this->model->exitAccount();
+        $url = $this->model->logoutAccount();
         $this->view->redirect($url);
     }
 }

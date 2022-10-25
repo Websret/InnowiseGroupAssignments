@@ -14,8 +14,12 @@
     <nav class="my-2 my-md-0 mr-md-3">
         <a class="p-2 text-dark" href="/">Home</a>
     </nav>
-    <a class="btn btn-outline-primary" href="/main/login">Sign up</a>
-    <a class="btn btn-outline-primary" href="/main/exit">Exit</a>
+
+    {% if authenticated == true %}
+            <a class="btn btn-outline-primary" onclick="return confirmation()" href="/main/logout">Logout</a>
+        {% else %}
+            <a class="btn btn-outline-primary" href="/main/login">Sign up</a>
+    {% endif %}
 </div>
 <div class="container">
     {% block content %}

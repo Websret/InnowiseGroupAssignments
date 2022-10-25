@@ -16,7 +16,7 @@ class Auth
 
     private string $userPassword;
 
-    private string $errorMessage;
+    private string $errorMessage = '';
 
     public function __construct()
     {
@@ -30,6 +30,7 @@ class Auth
             $this->url,
             [
                 'name' => $_SESSION['name'],
+                'authenticated' => true,
             ],
         ];
     }
@@ -50,10 +51,9 @@ class Auth
         ];
     }
 
-    public function exitAccount(): string
+    public function logoutAccount(): string
     {
         $_SESSION['name'] = '';
-
         $this->checkSession();
         return $this->url;
     }
@@ -66,7 +66,7 @@ class Auth
     private function checkSession(): void
     {
         $url = '/';
-        if (empty($_SESSION['name'])){
+        if (empty($_SESSION['name'])) {
             $url = '/main/login';
         }
         $this->url = $url;
@@ -74,7 +74,7 @@ class Auth
 
     private function createSession(bool $valid): void
     {
-        if ($valid){
+        if ($valid) {
             $_SESSION['name'] = $this->userName;
         }
     }
@@ -90,18 +90,15 @@ class Auth
 
     private function validationParams(): bool
     {
-        if (!filter_var($this->params['email'], FILTER_VALIDATE_EMAIL)){
-//            $_SESSION["message"] = "Email is not valid.";
+        if (!filter_var($this->params['email'], FILTER_VALIDATE_EMAIL)) {
             $this->alert("Email is not valid.");
             return false;
         }
         if (!$this->findUser()) {
-//            $_SESSION["message"] = "This email is not correct.";
-            $this->alert("This email is not correct.");
+            $this->alert("This email is not founding.");
             return false;
         }
         if (!$this->checkPassword()) {
-//            $_SESSION["message"] = "This password is not correct.";
             $this->alert("This password is not correct.");
             return false;
         }
@@ -110,8 +107,8 @@ class Auth
 
     private function findUser(): bool
     {
-        foreach ($this->users as $email => $user){
-            if ($email == $this->params['email']){
+        foreach ($this->users as $email => $user) {
+            if ($email == $this->params['email']) {
                 $this->userName = $user['name'];
                 $this->userPassword = $user['password'];
                 return true;
@@ -122,7 +119,7 @@ class Auth
 
     private function checkPassword(): bool
     {
-        if ($this->userPassword === $this->params['password']){
+        if (password_verify($this->params['password'], $this->userPassword)) {
             return true;
         }
         return false;

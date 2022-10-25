@@ -16,8 +16,8 @@ class Main extends Model
         return $this->db->loginUser($params);
     }
 
-    public function exitAccount(): string
+    public function logoutAccount(): string
     {
-        return $this->db->exitAccount();
+        return $this->db->logoutAccount();
     }
 }

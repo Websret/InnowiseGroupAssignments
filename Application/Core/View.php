@@ -9,6 +9,8 @@ class View
 {
     public string $path;
 
+    private const PATH_VIEWS = 'Application/Views';
+
     public array $route;
 
     public string $layout = 'default';
@@ -21,7 +23,7 @@ class View
 
     public function render($vars = []): void
     {
-        $loader = new FilesystemLoader('Application/Views');
+        $loader = new FilesystemLoader(self::PATH_VIEWS);
         $twig = new Environment($loader);
         echo $twig->render($this->path . '.twig', $vars);
     }
