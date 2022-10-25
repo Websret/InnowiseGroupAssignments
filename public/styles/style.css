@@ -1,6 +1,7 @@
 body {
     font-size: 14px;
     padding: 15px 20px;
+    height: 100%;
 }
 
 table {
@@ -51,4 +52,8 @@ input:valid {
 
 .errorMessage {
     background: red;
+}
+
+.my-0 {
+    margin-right: auto!important;
 }

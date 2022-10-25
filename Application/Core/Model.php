@@ -2,14 +2,14 @@
 
 namespace Application\Core;
 
-use Application\Lib\FileSystem;
+use Application\Lib\Auth;
 
 abstract class Model
 {
-    public FileSystem $link;
+    public Auth $db;
 
     public function __construct()
     {
-        $this->link = new FileSystem;
+        $this->db = new Auth;
     }
 }
