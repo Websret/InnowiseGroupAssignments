@@ -15,6 +15,10 @@
         <a class="p-2 text-dark" href="/">Home</a>
     </nav>
 
+    {% if isAuth() %}
+        authed
+    {% endif %}
+
     {% if authenticated == true %}
             <a class="btn btn-outline-primary" onclick="return confirmation()" href="/main/logout">Logout</a>
         {% else %}

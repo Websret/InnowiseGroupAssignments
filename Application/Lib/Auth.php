@@ -2,7 +2,9 @@
 
 namespace Application\Lib;
 
-class Auth
+use Twig\TwigFunction;
+
+class Auth implements TwigImplementer
 {
     private const PATH = 'Application/Config/users.php';
 
@@ -21,6 +23,14 @@ class Auth
     public function __construct()
     {
         $this->users = require self::PATH;
+    }
+
+    public static function isAuth()
+    {
+        if (isset($_SESSION['name'])) {
+            return false;
+        }
+        return true;
     }
 
     public function checkAuthorization(): array
@@ -53,7 +63,7 @@ class Auth
 
     public function logoutAccount(): string
     {
-        $_SESSION['name'] = '';
+        unset($_SESSION['name']);
         $this->checkSession();
         return $this->url;
     }
@@ -107,12 +117,11 @@ class Auth
 
     private function findUser(): bool
     {
-        foreach ($this->users as $email => $user) {
-            if ($email == $this->params['email']) {
-                $this->userName = $user['name'];
-                $this->userPassword = $user['password'];
-                return true;
-            }
+        if (isset($this->users[$this->params['email']])) {
+            $user = $this->users[$this->params['email']];
+            $this->userName = $user['name'];
+            $this->userPassword = $user['password'];
+            return true;
         }
         return false;
     }
@@ -123,5 +132,11 @@ class Auth
             return true;
         }
         return false;
+    }
+
+    public function addFunctions(&$twig)
+    {
+        $isAuthFunc = new TwigFunction('isAuth', fn () => self::isAuth());
+        $twig->addFunction($isAuthFunc);
     }
 }

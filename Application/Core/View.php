@@ -2,6 +2,7 @@
 
 namespace Application\Core;
 
+use Application\Lib\TwigImplementer;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -25,7 +26,21 @@ class View
     {
         $loader = new FilesystemLoader(self::PATH_VIEWS);
         $twig = new Environment($loader);
+        $this->additionalFunctions($twig);
+
         echo $twig->render($this->path . '.twig', $vars);
+    }
+
+    private function additionalFunctions(&$twig): void
+    {
+        $services = require 'Application/Config/services.php';
+
+        foreach ($services as $service) {
+            $service = new $service;
+            if ($service instanceof TwigImplementer) {
+                $service->addFunctions($twig);
+            }
+        }
     }
 
     public static function errorCode($code, $title = 'Page 404'): void
