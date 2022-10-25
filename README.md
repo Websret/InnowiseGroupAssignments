@@ -1,16 +1,24 @@
-Task 15. Create file upload HTML form and allow users to upload files to the server
+Task 16. Create an authentication form
 
-Create an upload file field. Perform client-side validation of the file size (use any implementation
-you know) and allow only text files and images.
-When the file is uploaded, check if its format matches the above file types. If the file does not match the formats, reject it and show a message to the user. If it's not, check if your storage has enough space to save files. If it has not, show a message to the user. If yes, move the file to the 'uploads' folder inside your web root directory. Check if the folder exists. If it does not, create it first. Use '@'to create a directory. Answer in code comment, why you use '@'.
-Under the file upload form a list of all files from the folder 'uploads' should be displayed
-Get file info: file size, file name, file meta information (for images) and send it to the front-end as the response of the upload action and show to the user in a user-friendly way.
-Also, when downloading each file, you must write a log file. Place the log file in the /logs folder.
-Every day it is necessary to create a new log file. The format of the log file name is "upload_ddmmyyyy.log". Information about each attempt to upload a file to the server must be entered in the log file. Therefore, the log file must contain the Date, Time, file name, file size, information about whether the file was uploaded successfully (if it is not uploaded, then you need to write the reason to the log file).
-You should implement this application in OOP. Split logic and templates into separate files.
-Logic files should contain PHP code only, while templates should contain only HTML and JS.
-Use separate CSS files for styles.
-For the View part you must use the Twig Template Engine, loaded through Composer
+Authentication form must contain email and password fields. Password typing should be hidden. Enable the submit button only if all fields are filled in together with the correct email. Don't use AJAX to send requests to the back-end.
+Authenticate user over the file below:
+<?php
+declare(strict_types=1);
+ 
+return [
+    'user1@test.com' => [
+        'name' => 'John',
+        'password' => 'your_hash_here1', // use password_hash() to generate password in your code
+    ],
+    'user2@test.com' => [
+        'name' => 'Jane',
+        'password' => 'your_hash_here2', // use password_hash() to generate password in your code
+    ],
+];
+ 
+If the user authenticated successfully, greet him by message 'Welcome back, {user name}!'. If no,
+show the message 'Login is incorrect.'.
+You should implement this application in OOP. Implement MVC pattern for this application. For the View part you must use the Twig Template Engine, loaded through Composer. Use separate CSS files for styles.
 Tags:  PHP, OOP, MVC, Bootstrap, Twig, Composer, HTML, CSS, JS, GIT
 
 This application was developed using PHP 8.1, used to start nginx
