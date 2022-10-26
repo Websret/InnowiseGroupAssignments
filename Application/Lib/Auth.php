@@ -12,13 +12,9 @@ class Auth implements TwigImplementer
 
     private array $params;
 
-    private string $url;
-
     private string $userName;
 
     private string $userPassword;
-
-    private string $errorMessage = '';
 
     public function __construct()
     {
@@ -27,91 +23,49 @@ class Auth implements TwigImplementer
 
     public static function isAuth()
     {
-        if (isset($_SESSION['name'])) {
-            return false;
+        if (isset($_SESSION['authenticated'])) {
+            return true;
         }
-        return true;
+        return false;
     }
 
-    public function checkAuthorization(): array
+    public static function loginUser(array $params = []): void
     {
-        $this->checkSession();
-        return [
-            $this->url,
-            [
-                'name' => $_SESSION['name'],
-                'authenticated' => true,
-            ],
-        ];
-    }
+        $auth = new Auth;
+        $auth->params = $params;
+        $validParams = $auth->validationParams();
 
-    public function loginUser(array $params = []): array
-    {
-        $this->params = $params;
-        $validParams = $this->validationParams();
-
-        $this->createSession($validParams);
-
-        $this->redirect();
-        return [
-            $this->url,
-            [
-                'error' => $this->errorMessage,
-            ]
-        ];
-    }
-
-    public function logoutAccount(): string
-    {
-        unset($_SESSION['name']);
-        $this->checkSession();
-        return $this->url;
-    }
-
-    private function alert(string $message): void
-    {
-        $this->errorMessage = $message;
-    }
-
-    private function checkSession(): void
-    {
-        $url = '/';
-        if (empty($_SESSION['name'])) {
-            $url = '/main/login';
-        }
-        $this->url = $url;
+        $auth->createSession($validParams);
     }
 
     private function createSession(bool $valid): void
     {
         if ($valid) {
             $_SESSION['name'] = $this->userName;
+            $_SESSION['authenticated'] = true;
         }
     }
 
-    private function redirect(): void
+    public static function logoutAccount(): void
     {
-        $url = '/';
-        if (!$this->validationParams()) {
-            $url = '/main/login';
-        }
-        $this->url = $url;
+        unset($_SESSION['authenticated']);
     }
 
     private function validationParams(): bool
     {
         if (!filter_var($this->params['email'], FILTER_VALIDATE_EMAIL)) {
-            $this->alert("Email is not valid.");
+            $_SESSION['message'] = "Email is not valid.";
             return false;
         }
         if (!$this->findUser()) {
-            $this->alert("This email is not founding.");
+            $_SESSION['message'] = "This email is not found.";
             return false;
         }
         if (!$this->checkPassword()) {
-            $this->alert("This password is not correct.");
+            $_SESSION['message'] = "This password is not correct.";
             return false;
         }
+        unset($_SESSION['message']);
         return true;
     }
 
@@ -136,7 +90,8 @@ class Auth implements TwigImplementer
 
     public function addFunctions(&$twig)
     {
-        $isAuthFunc = new TwigFunction('isAuth', fn () => self::isAuth());
+        $isAuthFunc = new TwigFunction('isAuth', fn() => self::isAuth());
+        $twig->addGlobal('session', $_SESSION);
         $twig->addFunction($isAuthFunc);
     }
 }

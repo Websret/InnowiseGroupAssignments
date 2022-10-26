@@ -16,13 +16,9 @@
     </nav>
 
     {% if isAuth() %}
-        authed
-    {% endif %}
-
-    {% if authenticated == true %}
-            <a class="btn btn-outline-primary" onclick="return confirmation()" href="/main/logout">Logout</a>
-        {% else %}
-            <a class="btn btn-outline-primary" href="/main/login">Sign up</a>
+        <a class="btn btn-outline-primary" onclick="return confirmation()" href="/main/logout">Logout</a>
+    {% else %}
+        <a class="btn btn-outline-primary" href="/main/login">Sign up</a>
     {% endif %}
 </div>
 <div class="container">
