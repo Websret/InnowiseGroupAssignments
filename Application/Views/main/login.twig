@@ -9,7 +9,7 @@
         <div class="container">
             <div class="row justify-content-center text-center">
                 <div class="col-5">
-                    {{ session.message }}
+                    {{ session.user.errorMessage }}
                     <form action="/main/authorization" method="post">
                         <div class="row mb-3">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Email: </label>

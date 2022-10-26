@@ -12,9 +12,11 @@ class Auth implements TwigImplementer
 
     private array $params;
 
-    private string $userName;
+    private string $userName = '';
 
     private string $userPassword;
+
+    private string $errorMessage = '';
 
     public function __construct()
     {
@@ -23,7 +25,10 @@ class Auth implements TwigImplementer
 
     public static function isAuth()
     {
-        return isset($_SESSION['user']);
+        if ($_SESSION['user']['authenticated']){
+            return true;
+        }
+        return false;
     }
 
     public static function loginUser(array $params = []): void
@@ -37,12 +42,11 @@ class Auth implements TwigImplementer
 
     private function createSession(bool $valid): void
     {
-        if ($valid) {
             $_SESSION['user'] = [
                 'name' => $this->userName,
-                'authenticated' => true,
+                'authenticated' => $valid,
+                'errorMessage' => $this->errorMessage,
             ];
-        }
     }
 
     public static function logoutAccount(): void
@@ -53,18 +57,18 @@ class Auth implements TwigImplementer
     private function validationParams(): bool
     {
         if (!filter_var($this->params['email'], FILTER_VALIDATE_EMAIL)) {
-            $_SESSION['message'] = "Email is not valid.";
+            $this->errorMessage = "Email is not valid.";
             return false;
         }
         if (!$this->findUser()) {
-            $_SESSION['message'] = "This email is not found.";
+            $this->errorMessage = "This email is not found.";
             return false;
         }
         if (!$this->checkPassword()) {
-            $_SESSION['message'] = "This password is not correct.";
+            $this->errorMessage = "This password is not correct.";
             return false;
         }
-        unset($_SESSION['message']);
+        unset($_SESSION['error']);
         return true;
     }
 
