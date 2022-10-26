@@ -23,10 +23,7 @@ class Auth implements TwigImplementer
 
     public static function isAuth()
     {
-        if (isset($_SESSION['authenticated'])) {
-            return true;
-        }
-        return false;
+        return isset($_SESSION['user']);
     }
 
     public static function loginUser(array $params = []): void
@@ -41,14 +38,16 @@ class Auth implements TwigImplementer
     private function createSession(bool $valid): void
     {
         if ($valid) {
-            $_SESSION['name'] = $this->userName;
-            $_SESSION['authenticated'] = true;
+            $_SESSION['user'] = [
+                'name' => $this->userName,
+                'authenticated' => true,
+            ];
         }
     }
 
     public static function logoutAccount(): void
     {
-        unset($_SESSION['authenticated']);
+        unset($_SESSION['user']);
     }
 
     private function validationParams(): bool
