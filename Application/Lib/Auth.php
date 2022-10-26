@@ -25,7 +25,7 @@ class Auth implements TwigImplementer
 
     public static function isAuth()
     {
-        if ($_SESSION['user']['authenticated']){
+        if ($_SESSION['user']['authenticated']) {
             return true;
         }
         return false;
@@ -42,11 +42,11 @@ class Auth implements TwigImplementer
 
     private function createSession(bool $valid): void
     {
-            $_SESSION['user'] = [
-                'name' => $this->userName,
-                'authenticated' => $valid,
-                'errorMessage' => $this->errorMessage,
-            ];
+        $_SESSION['user'] = [
+            'name' => $this->userName,
+            'authenticated' => $valid,
+            'errorMessage' => $this->errorMessage,
+        ];
     }
 
     public static function logoutAccount(): void
@@ -68,7 +68,6 @@ class Auth implements TwigImplementer
             $this->errorMessage = "This password is not correct.";
             return false;
         }
-        unset($_SESSION['error']);
         return true;
     }
 
