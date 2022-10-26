@@ -82,10 +82,7 @@ class Auth implements TwigImplementer
 
     private function checkPassword(): bool
     {
-        if (password_verify($this->params['password'], $this->userPassword)) {
-            return true;
-        }
-        return false;
+        return password_verify($this->params['password'], $this->userPassword);
     }
 
     public function addFunctions(&$twig)
