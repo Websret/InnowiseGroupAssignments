@@ -1,13 +1,66 @@
 {% extends "layouts/default.twig" %}
 
-{% block title %}Index page{% endblock %}
+{% block title %}Registration page{% endblock %}
 
-{% block namepage %}Main page{% endblock %}
+{% block namepage %}Registration page{% endblock %}
 
 {% block content %}
-    <div class="row ">
-        <div class="col text-center">
-            <H3>Welcome back, {{ session.user.name }}</H3>
+
+    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+        <div class="card" style="border-radius: 15px;">
+            <div class="card-body p-5">
+                <h2 class="text-uppercase text-center mb-2">Create an account</h2>
+
+                <form action="/main/registration" method="post">
+
+                    {% for error in session.user.errorMessage %}
+                        <ul>
+                            <li>{{ error|e }}</li>
+                        </ul>
+                    {% endfor %}
+
+                    <div class="form-outline mb-2">
+                        <input type="text" name="formFirstName" id="formFirstName" class="form-control form-control-lg"/>
+                        <label class="form-label" for="formFirstName">First Name</label>
+                    </div>
+
+                    <div class="form-outline mb-2">
+                        <input type="text" name="formLastName" id="formLastName" class="form-control form-control-lg"/>
+                        <label class="form-label" for="formLastName">Last Name</label>
+                    </div>
+
+                    <div class="form-outline mb-2">
+                        <input type="email" name="formEmail" id="formEmail" class="form-control form-control-lg"/>
+                        <label class="form-label" for="formEmail">Email</label>
+                    </div>
+
+                    <div class="form-outline mb-2">
+                        <input type="email" name="formConfirmEmail" id="formConfirmEmail" class="form-control form-control-lg"/>
+                        <label class="form-label" for="formConfirmEmail">Confirm Email</label>
+                    </div>
+
+                    <div class="form-outline mb-2">
+                        <input type="password" name="formPassword" id="formPassword" class="form-control form-control-lg"/>
+                        <label class="form-label" for="formPassword">Password</label>
+                    </div>
+
+                    <div class="form-outline mb-2">
+                        <input type="password" name="formConfirmPassword" id="formConfirmPassword" class="form-control form-control-lg"/>
+                        <label class="form-label" for="formConfirmPassword">Confirm password</label>
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" id="validate" disabled
+                                class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Register
+                        </button>
+                    </div>
+
+                    <p class="text-center text-muted mt-3 mb-0">Have already an account?
+                        <a href="/" class="fw-bold text-body"><u>Login here</u></a>
+                    </p>
+                </form>
+
+            </div>
         </div>
     </div>
 {% endblock %}

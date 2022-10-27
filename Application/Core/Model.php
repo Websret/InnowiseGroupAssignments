@@ -2,14 +2,14 @@
 
 namespace Application\Core;
 
-use Application\Lib\Auth;
+use Application\Lib\Db;
 
 abstract class Model
 {
-    public Auth $db;
+    public Db $db;
 
     public function __construct()
     {
-        $this->db = new Auth;
+        $this->db = new Db;
     }
 }
