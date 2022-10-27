@@ -26,7 +26,7 @@ class MainController extends Controller
                 'email' => $_POST["formEmail"],
                 'firstName' => $_POST["formFirstName"],
                 'lastName' => $_POST["formLastName"],
-                'password' => $_POST["formPassword"],
+                'password' => password_hash($_POST["formPassword"], PASSWORD_DEFAULT),
                 'data' => date('Y-m-d H:i:s'),
             ];
             $this->model->addUser($params);

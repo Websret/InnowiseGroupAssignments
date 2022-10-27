@@ -13,39 +13,47 @@
 
                 <form action="/main/registration" method="post">
 
-                    {% for error in session.user.errorMessage %}
-                        <ul>
-                            <li>{{ error|e }}</li>
-                        </ul>
+                    {% for key, errors in session.user.errorMessage %}
+                        {% for error in errors %}
+                            <ul>
+                                <li>{{ key }}: {{ error }}</li>
+                            </ul>
+                        {% endfor %}
                     {% endfor %}
 
                     <div class="form-outline mb-2">
-                        <input type="text" name="formFirstName" id="formFirstName" class="form-control form-control-lg"/>
+                        <input type="text" name="formFirstName" id="formFirstName"
+                               class="form-control form-control-lg" value="{{ session.user.correctField.formFirstName.0 }}">
                         <label class="form-label" for="formFirstName">First Name</label>
                     </div>
 
                     <div class="form-outline mb-2">
-                        <input type="text" name="formLastName" id="formLastName" class="form-control form-control-lg"/>
+                        <input type="text" name="formLastName" id="formLastName" class="form-control form-control-lg"
+                               value="{{ session.user.correctField.formLastName.0 }}"/>
                         <label class="form-label" for="formLastName">Last Name</label>
                     </div>
 
                     <div class="form-outline mb-2">
-                        <input type="email" name="formEmail" id="formEmail" class="form-control form-control-lg"/>
+                        <input type="email" name="formEmail" id="formEmail" class="form-control form-control-lg"
+                               value="{{ session.user.correctField.formEmail.0 }}"/>
                         <label class="form-label" for="formEmail">Email</label>
                     </div>
 
                     <div class="form-outline mb-2">
-                        <input type="email" name="formConfirmEmail" id="formConfirmEmail" class="form-control form-control-lg"/>
+                        <input type="email" name="formConfirmEmail" id="formConfirmEmail"
+                               class="form-control form-control-lg" value="{{ session.user.correctField.formEmail.0 }}"/>
                         <label class="form-label" for="formConfirmEmail">Confirm Email</label>
                     </div>
 
                     <div class="form-outline mb-2">
-                        <input type="password" name="formPassword" id="formPassword" class="form-control form-control-lg"/>
+                        <input type="password" name="formPassword" id="formPassword"
+                               class="form-control form-control-lg"/>
                         <label class="form-label" for="formPassword">Password</label>
                     </div>
 
                     <div class="form-outline mb-2">
-                        <input type="password" name="formConfirmPassword" id="formConfirmPassword" class="form-control form-control-lg"/>
+                        <input type="password" name="formConfirmPassword" id="formConfirmPassword"
+                               class="form-control form-control-lg"/>
                         <label class="form-label" for="formConfirmPassword">Confirm password</label>
                     </div>
 

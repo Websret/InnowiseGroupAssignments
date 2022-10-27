@@ -9,10 +9,18 @@ class Main extends Model
 {
     public function addUser(array $params = []): void
     {
-        $this->db->dbo
-            ->prepare('INSERT INTO users (email, first_name, last_name, password, created_date)
+        try {
+            $this->db->dbo->beginTransaction();
+            $this->db->dbo
+                ->prepare('INSERT INTO users (email, first_name, last_name, password, created_date)
                                         VALUES (:email, :firstName, :lastName, :password, :data)')
-            ->execute($params);
+                ->execute($params);
+            $this->db->dbo->commit();
+        } catch (\Exception $e) {
+            $this->db->dbo->rollBack();
+            echo "Error: " . $e->getMessage();
+        }
+
     }
 
     public function getUsersEmail(array $params = []): array
