@@ -19,15 +19,36 @@ class Validator implements TwigImplementer
 
     public function validate(): bool
     {
-        unset($_SESSION['user']);
+        unset($_SESSION['data']);
         foreach ($this->params as $param => $implodedRules) {
             $rules = explode('|', $implodedRules);
-            $this->getRule($rules, $param);
+
+            if (in_array('required', $rules)) {
+                if (!$this->required($param, $rules)) {
+                    continue;
+                }
+            } else {
+                if (!isset($_POST[$param])) continue;
+            }
+
+            $this->runRules($rules, $param);
+            $this->createSuccessSession($param);
         }
         return $this->isEmptySession();
     }
 
-    private function getRule(array $rules, string $param): void
+    private function required($param, &$rules): bool
+    {
+        unset($rules[array_search('required', $rules)]);
+        if (!isset($_POST[$param])) {
+            $this->errorMessage = "$param fields is required.";
+            $this->createErrorSession($param);
+            return false;
+        }
+        return true;
+    }
+
+    private function runRules(array $rules, string $param): void
     {
         foreach ($rules as $rule) {
             $this->methodName = $rule;
@@ -52,33 +73,28 @@ class Validator implements TwigImplementer
 
         if (!$isValid) {
             $this->createErrorSession($param);
-            unset($_SESSION['user']['correctField'][$param]);
-        } else {
-            $this->createSuccessSession($param);
         }
     }
 
     private function createErrorSession(string $param): void
     {
-        if (is_array($_SESSION['user']['errorMessage'][$param])) {
-            $_SESSION['user']['errorMessage'][$param][] = $this->errorMessage;
+        if (isset($_SESSION['data']['errorMessage'][$param])) {
+            $_SESSION['data']['errorMessage'][$param][] = $this->errorMessage;
         } else {
-            $_SESSION['user']['errorMessage'][$param] = [$this->errorMessage];
+            $_SESSION['data']['errorMessage'][$param] = [$this->errorMessage];
         }
     }
 
     private function createSuccessSession(string $param): void
     {
-        if (is_array($_SESSION['user']['correctField'][$param])) {
-            $_SESSION['user']['correctField'][$param][] = $_POST[$param];
-        } else {
-            $_SESSION['user']['correctField'][$param] = [$_POST[$param]];
+        if (!isset($_SESSION['data']['errorMessage'][$param])) {
+            $_SESSION['data']['correctField'][$param] = $_POST[$param];
         }
     }
 
     private function isEmptySession(): bool
     {
-        return empty($_SESSION['user']);
+        return empty($_SESSION['data']);
     }
 
     private function upperCase(string $param, int $value = null): bool
@@ -117,7 +133,7 @@ class Validator implements TwigImplementer
         return true;
     }
 
-    private function length(string $param, int $value = null): bool
+    private function min(string $param, int $value = null): bool
     {
         if (strlen($param) < $value) {
             $this->errorMessage = "Your string must to be length " . $value . ".";
