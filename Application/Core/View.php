@@ -16,7 +16,7 @@ class View
 
     public string $layout = 'default';
 
-    public function __construct(array $route)
+    public function __construct(array $route = [])
     {
         $this->route = $route;
         $this->path = array_shift($route) . '/' . array_shift($route);
@@ -43,15 +43,12 @@ class View
         }
     }
 
-    public static function errorCode($code, $title = 'Page 404'): void
+    public static function errorCode($code): void
     {
         http_response_code($code);
-        $path = 'Application/Views/errors/' . $code . '.php';
-        if (file_exists($path)) {
-            ob_start();
-            require $path;
-        }
-        exit;
+        $view = new View();
+        $view->path = 'errors/' . $code;
+        $view->render();
     }
 
     public function redirect($url): void

@@ -16,6 +16,7 @@ class Main extends Model
                                         VALUES (:email, :firstName, :lastName, :password, :data)')
                 ->execute($params);
             $this->db->dbo->commit();
+            unset($_SESSION['data']);
         } catch (\Exception $e) {
             $this->db->dbo->rollBack();
             echo "Error: " . $e->getMessage();

@@ -94,7 +94,7 @@ class Validator implements TwigImplementer
 
     private function isEmptySession(): bool
     {
-        return empty($_SESSION['data']);
+        return empty($_SESSION['data']['errorMessage']);
     }
 
     private function upperCase(string $param, int $value = null): bool
