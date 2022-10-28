@@ -24,7 +24,7 @@ class Validator implements TwigImplementer
             $rules = explode('|', $implodedRules);
 
             if (in_array('required', $rules)) {
-                if (!$this->required($param, $rules)) {
+                if (!$this->checkRequiredParam($param, $rules)) {
                     continue;
                 }
             } else {
@@ -34,10 +34,10 @@ class Validator implements TwigImplementer
             $this->runRules($rules, $param);
             $this->createSuccessSession($param);
         }
-        return $this->isEmptySession();
+        return $this->isErrorsEmpty();
     }
 
-    private function required($param, &$rules): bool
+    private function checkRequiredParam($param, &$rules): bool
     {
         unset($rules[array_search('required', $rules)]);
         if (!isset($_POST[$param])) {
@@ -92,7 +92,7 @@ class Validator implements TwigImplementer
         }
     }
 
-    private function isEmptySession(): bool
+    private function isErrorsEmpty(): bool
     {
         return empty($_SESSION['data']['errorMessage']);
     }
