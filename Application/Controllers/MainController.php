@@ -4,6 +4,7 @@ namespace Application\Controllers;
 
 use Application\Core\Controller;
 use Application\Lib\Validator;
+use Application\Models\Main;
 
 class MainController extends Controller
 {
@@ -14,13 +15,12 @@ class MainController extends Controller
 
     public function registrationAction(): void
     {
-        $row = $this->model->getUsersEmail(['email' => $_POST["formEmail"]]);
         $validator = new Validator([
             'formFirstName' => 'onlyString|min:2|required',
             'formLastName' => 'onlyString|min:2|required',
             'formConfirmEmail' => 'required',
             'formConfirmPassword' => 'required',
-            'formEmail' => 'isEmail|min:4|isEqualTo:' . $_POST["formConfirmEmail"] . '|emailExist:' . $row['total'] . '|required',
+            'formEmail' => 'isEmail|min:4|isEqualTo:' . $_POST["formConfirmEmail"] . '|emailExist:' . Main::class . ',email|required',
             'formPassword' => 'upperCase:1|lowerCase:1|checkDigit:1|specialCharacter:1|min:6|isEqualTo:' . $_POST["formConfirmPassword"] . '|required',
         ]);
         if ($validator->validate()) {

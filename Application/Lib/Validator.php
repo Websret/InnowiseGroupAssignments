@@ -162,7 +162,12 @@ class Validator implements TwigImplementer
 
     private function emailExist(string $param, string $value): bool
     {
-        if ($value > 0) {
+        $data = explode(',', $value);
+        $dbField = $data[1];
+        $model = new $data[0];
+        $row = $model->getUsersEmail([$dbField => $param]);
+
+        if ($row['total'] > 0) {
             $this->errorMessage = "This email is already in use.";
             return false;
         }
