@@ -23,16 +23,18 @@ class MainController extends Controller
             'formEmail' => 'isEmail|min:4|isEqualTo:' . $_POST["formConfirmEmail"] . '|emailExist:' . Main::class . ',email|required',
             'formPassword' => 'upperCase:1|lowerCase:1|checkDigit:1|specialCharacter:1|min:6|isEqualTo:' . $_POST["formConfirmPassword"] . '|required',
         ]);
-        if ($validator->validate()) {
-            $params = [
-                'email' => $_POST["formEmail"],
-                'firstName' => $_POST["formFirstName"],
-                'lastName' => $_POST["formLastName"],
-                'password' => password_hash($_POST["formPassword"], PASSWORD_DEFAULT),
-                'data' => date('Y-m-d H:i:s'),
-            ];
-            $this->model->addUser($params);
+
+        if (!$validator->validate()) {
+            $this->view->redirect('/');
         }
-        $this->view->redirect('/');
+
+        $params = [
+            'email' => $_POST["formEmail"],
+            'firstName' => $_POST["formFirstName"],
+            'lastName' => $_POST["formLastName"],
+            'password' => password_hash($_POST["formPassword"], PASSWORD_DEFAULT),
+            'data' => date('Y-m-d H:i:s'),
+        ];
+        $this->model->addUser($params);
     }
 }
