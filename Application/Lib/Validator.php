@@ -162,10 +162,7 @@ class Validator implements TwigImplementer
 
     private function emailExist(string $param, string $value): bool
     {
-        $data = explode(',', $value);
-        $dbField = $data[1];
-        $model = new $data[0];
-        $row = $model->getUsersEmail([$dbField => $param]);
+        $row = $this->getMethodClass($param, $value);
 
         if ($row['total'] > 0) {
             $this->errorMessage = "This email is already in use.";
@@ -181,6 +178,25 @@ class Validator implements TwigImplementer
             return false;
         }
         return true;
+    }
+
+    private function findUserEmail(string $param, string $value): bool
+    {
+        $row = $this->getMethodClass($param, $value);
+
+        if ($row['total'] < 1) {
+            $this->errorMessage = "This email is not found.";
+            return false;
+        }
+        return true;
+    }
+
+    private function getMethodClass(string $param, string $value): array
+    {
+        $data = explode(',', $value);
+        $dbField = $data[1];
+        $model = new $data[0];
+        return $model->getUsersEmail([$dbField => $param]);
     }
 
     public function addFunctions(&$twig)
