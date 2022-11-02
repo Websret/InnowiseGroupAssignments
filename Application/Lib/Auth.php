@@ -26,12 +26,17 @@ class Auth implements TwigImplementer
         $this->users = new User();
     }
 
-    public static function isAuth()
+    public static function isAuth(): bool
     {
-        if ($_SESSION['data']['user']['authenticated']) {
+        if (self::checkSession() && $_SESSION['data']['user']['authenticated']) {
             return true;
         }
         return false;
+    }
+
+    private static function checkSession(): bool
+    {
+        return isset($_SESSION['data']['user']);
     }
 
     public static function loginUser(array $params = []): void
@@ -60,6 +65,14 @@ class Auth implements TwigImplementer
         ];
     }
 
+    public static function createRegistrationSession(array $params = []): void
+    {
+        $_SESSION['data']['user'] = [
+            'name' => $params['firstName'],
+            'authenticated' => true,
+        ];
+    }
+
     public static function logoutAccount(): void
     {
         unset($_SESSION['data']);
@@ -70,7 +83,7 @@ class Auth implements TwigImplementer
     {
         $row = $this->users->getUsersData(['email' => $this->params['email']]);
         $this->userData = $row;
-        if (empty($row) || !$this->checkPassword($row[0]['password'])) {
+        if (empty($row) || !$this->checkPassword()) {
             $this->errorMessage .= " Login is incorrect.";
             return false;
         }
@@ -79,8 +92,7 @@ class Auth implements TwigImplementer
 
     private function checkPassword(): bool
     {
-        if ((password_verify($this->params['password'], $this->userData[0]['password']) ||
-                ($this->params['password'] == $this->userData[0]['password'])) && $this->checkUserBanned()) {
+        if ($this->checkPasswordInDb() && $this->checkUserBanned()) {
             $this->deleteAttackerFromTable();
             return true;
         }
@@ -88,11 +100,17 @@ class Auth implements TwigImplementer
         return false;
     }
 
+    private function checkPasswordInDb(): bool
+    {
+        return (password_verify($this->params['password'], $this->userData[0]['password']) ||
+            ($this->params['password'] == $this->userData[0]['password']));
+    }
+
     private function checkUserBanned(): bool
     {
         $row = $this->users->getAttackers(['ip' => $_SERVER['REMOTE_ADDR']]);
         $nowDateTime = date("d-m-y H:i:s");
-        if (strtotime($nowDateTime) < strtotime($row[0]['endTime'])) {
+        if (strtotime($nowDateTime) < strtotime($row[0]['endTime']) && $row[0]['numberAttack'] == 3) {
             return false;
         }
         return true;
@@ -106,7 +124,7 @@ class Auth implements TwigImplementer
         if (empty($row)) {
             $this->numberInputs = 1;
             $this->addAttacker();
-        } elseif ($row[0]['number'] < 3) {
+        } elseif ($row[0]['numberAttack'] < 3) {
             $this->numberInputs = ++$row[0]['numberAttack'];
             $this->updateAttacker();
         } else {
