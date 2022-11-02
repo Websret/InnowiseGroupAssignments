@@ -17,6 +17,7 @@ class MainController extends Controller
         $vars = [
             'fileArray' => $file,
         ];
+//        unset($_SESSION['data']);
         $this->view->render($vars);
     }
 
