@@ -168,7 +168,7 @@ class Auth implements TwigImplementer
 
     private function checkRememberCookie(): bool
     {
-        return (isset($_COOKIE['email']) && isset($_COOKIE));
+        return isset($_COOKIE['email']);
     }
 
     private function deleteCookie(): void
