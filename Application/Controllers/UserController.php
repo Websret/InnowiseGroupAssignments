@@ -68,6 +68,7 @@ class UserController extends Controller
         $params = [
             'email' => $_POST['formEmail'],
             'password' => $_POST['formPassword'],
+            'remember' => isset($_POST['remember']),
         ];
         Auth::loginUser($params);
         $this->redirect();

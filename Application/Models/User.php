@@ -20,7 +20,6 @@ class User extends Model
             $this->db->dbo->rollBack();
             echo "Error: " . $e->getMessage();
         }
-
     }
 
     public function getUsersEmail(array $params = []): array
@@ -40,5 +39,36 @@ class User extends Model
         $stmt->execute($params);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function addAttackers(array $params = []): void
+    {
+        $this->db->dbo
+            ->prepare('INSERT INTO attackers (ip_address, email, startTime, numberAttack, endTime)
+                            VALUES (:ip, :email, :startTime, :numberAttack, :endTime)')
+            ->execute($params);
+    }
+
+    public function updateAttackers(array $params = []): void
+    {
+        $this->db->dbo
+            ->prepare('UPDATE attackers SET startTime = :startTime, numberAttack = :numberAttack, endTime = :endTime WHERE ip_address = :ip')
+            ->execute($params);
+    }
+
+    public function getAttackers(array $params = []): array
+    {
+        $stmt = $this->db->dbo
+            ->prepare('SELECT * FROM attackers WHERE ip_address = :ip');
+        $stmt->execute($params);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function deleteAttackers(array $params = []): void
+    {
+        $this->db->dbo
+            ->prepare('DELETE FROM attackers WHERE ip_address = :ip')
+            ->execute($params);
     }
 }
