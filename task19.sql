@@ -32,7 +32,7 @@ CREATE TABLE `product` (
   PRIMARY KEY (`id`),
   KEY `foreign_key_type` (`product_type`),
   CONSTRAINT `foreign_key_type` FOREIGN KEY (`product_type`) REFERENCES `product_type` (`type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,'IPhone 13','Apple','2021-11-01 08:42:05',800,3),(2,'Samsung FR3','Samsung','2020-07-24 07:44:09',1200,4),(3,'HP L310','HP','2022-02-28 08:48:40',900,2),(4,'Huawei Nova 5T','Huawei','2020-02-24 08:50:36',500,3);
+INSERT INTO `product` VALUES (1,'IPhone 13','Apple','2021-11-01 08:42:05',800,3),(2,'Samsung FR3','Samsung','2020-07-24 07:44:09',1200,4),(3,'HP L310','HP','2022-02-28 08:48:40',900,2),(4,'Huawei Nova 5T','Huawei','2020-02-24 08:50:36',500,3),(5,'IPhone 14','Apple','2022-11-01 23:00:00',1100,3),(6,'Samsung TV512','Samsung','2018-05-12 22:00:00',700,1);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -58,8 +58,8 @@ CREATE TABLE `product_t_s` (
   PRIMARY KEY (`type_tss_id`,`service_tss_id`),
   KEY `ticket_id` (`type_tss_id`),
   KEY `nomination_id` (`service_tss_id`),
-  CONSTRAINT `FK_Nominations` FOREIGN KEY (`service_tss_id`) REFERENCES `product_type` (`type_id`) ON DELETE CASCADE,
-  CONSTRAINT `FK_Ticket` FOREIGN KEY (`type_tss_id`) REFERENCES `services` (`service_id`) ON DELETE CASCADE
+  CONSTRAINT `FK_Nominations` FOREIGN KEY (`service_tss_id`) REFERENCES `services` (`service_id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_Ticket` FOREIGN KEY (`type_tss_id`) REFERENCES `product_type` (`type_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -132,4 +132,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-04  9:12:14
+-- Dump completed on 2022-11-04 15:42:00
