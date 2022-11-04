@@ -1,0 +1,17 @@
+{
+  "name": "user/task19",
+  "authors": [
+    {
+      "name": "Websret",
+      "email": "2244224422az@gmail.com"
+    }
+  ],
+  "require": {
+    "ext-pdo": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Application\\": "Application/"
+    }
+  }
+}
