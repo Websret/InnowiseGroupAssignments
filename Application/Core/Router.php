@@ -27,12 +27,6 @@ class Router
         }
     }
 
-    public function checkPages(string $internalRoute): array
-    {
-        $uri = $internalRoute == "main/index" ? $internalRoute : $this->getURI();
-        return explode('/', $uri);
-    }
-
     public function getParams(array $segments, object $controllerObject, string $actionName): void
     {
         empty($segments) ? $controllerObject->$actionName() : $controllerObject->$actionName($segments);
@@ -44,7 +38,7 @@ class Router
         foreach ($this->routes as $uriPattern => $path) {
             if (preg_match("~$uriPattern~", $uri)) {
                 $internalRoute = preg_replace("~$uriPattern~", $path, $uri);
-                $segments = $this->checkPages($internalRoute);
+                $segments = explode('/', $internalRoute);
                 $parameters = $segments;
                 $controllerName = ucfirst(array_shift($segments)) . 'Controller';
                 $actionName = array_shift($segments) . 'Action';
