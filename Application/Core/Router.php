@@ -13,29 +13,34 @@ class Router
     public function run(): void
     {
         $urlParts = parse_url($_SERVER['REQUEST_URI']);
+        $isMatched = false;
 
         foreach ($this->routeCollection[$_SERVER['REQUEST_METHOD']] as $route) {
-            $isMatched = preg_match("/^" . str_replace('/', '\/', $route['uri']) . "$/", rtrim($urlParts['path'], '/'));
+            $isMatched = preg_match("/^" .  str_replace('/', '\/', $route['uri']) . "$/", rtrim($urlParts['path'], '/'));
 
             if ($isMatched) {
-                $segments = explode('/', $route['uri']);
-
-                foreach ($segments as $segmentKey => $segment) {
-                    if (in_array($segment, self::REGEXES)) {
-                        $uriSegments = explode('/', $urlParts['path']);
-                        $this->args[] = $uriSegments[$segmentKey];
-                    }
-                }
-
-                $route['callback'](...$this->args);
-                $methodFound = true;
+                $this->callMethod($route, $urlParts);
                 break;
             }
         }
 
-        if (!isset($methodFound)) {
+        if (!$isMatched) {
             echo '404 not Found';
         }
+    }
+
+    private function callMethod(array $route, array $urlParts): void
+    {
+        $segments = explode('/', $route['uri']);
+
+        foreach ($segments as $segmentKey => $segment) {
+            if (in_array($segment, self::REGEXES)) {
+                $uriSegments = explode('/', $urlParts['path']);
+                $this->args[] = $uriSegments[$segmentKey];
+            }
+        }
+
+        $route['callback'](...$this->args);
     }
 
     public function post(string $uri, callable $callback): void
@@ -63,7 +68,7 @@ class Router
         $this->add('PATCH', $uri, $callback);
     }
 
-    public function add(string $method, string $uri, callable $callback): void
+    public function add(string $method, string  $uri, callable $callback): void
     {
         $this->routeCollection[$method][] = ['uri' => $uri, 'callback' => $callback];
     }
