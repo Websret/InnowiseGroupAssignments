@@ -10,7 +10,7 @@ class ProductModel extends Model
     {
         $stmt = $this->db->dbo
             ->prepare('SELECT id, name, manufactures, release_date, cost, type_name FROM product 
-                            JOIN product_type pt on pt.type_id = product.product_type');
+                            JOIN product_type pt on pt.type_id = product.product_type ORDER BY id ASC');
         $stmt->execute();
 
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);

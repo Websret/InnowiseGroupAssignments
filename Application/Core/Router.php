@@ -16,7 +16,7 @@ class Router
         $isMatched = false;
 
         foreach ($this->routeCollection[$_SERVER['REQUEST_METHOD']] as $route) {
-            $isMatched = preg_match("/^" .  str_replace('/', '\/', $route['uri']) . "$/", rtrim($urlParts['path'], '/'));
+            $isMatched = preg_match("/^" . str_replace('/', '\/', $route['uri']) . "$/", rtrim($urlParts['path'], '/'));
 
             if ($isMatched) {
                 $this->callMethod($route, $urlParts);
@@ -68,7 +68,7 @@ class Router
         $this->add('PATCH', $uri, $callback);
     }
 
-    public function add(string $method, string  $uri, callable $callback): void
+    public function add(string $method, string $uri, callable $callback): void
     {
         $this->routeCollection[$method][] = ['uri' => $uri, 'callback' => $callback];
     }

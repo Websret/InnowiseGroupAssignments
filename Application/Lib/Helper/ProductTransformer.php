@@ -14,7 +14,7 @@ class ProductTransformer
     public static function associationDataAndPrice(array $array1, array $array2): array
     {
         $newArray = $array1 + [
-            'service' => $array2,
+                'service' => $array2,
             ];
         $totalPrice = $array1['cost'] + $array2['service_cost'];
 
@@ -25,7 +25,7 @@ class ProductTransformer
     public static function changeData(array &$array): array
     {
         $newArray = [];
-        foreach ($array as $value){
+        foreach ($array as $value) {
             $newArray[] = $value;
         }
         return $newArray;
@@ -67,7 +67,7 @@ class ProductTransformer
     {
         $newArray = [];
         foreach ($_SESSION['data']['errorMessage'] as $key => $value) {
-            $newArray['message'] =  $value;
+            $newArray['message'] = $value;
         }
         return $newArray;
     }

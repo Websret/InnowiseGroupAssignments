@@ -29,7 +29,7 @@ class ProductController extends Controller
     {
         $_POST['id'] = $id;
         $validator = new Validator([
-            'id' => 'onlyInt|productExist:' . ProductModel::class .',id|max:10000',
+            'id' => 'onlyInt|productExist:' . ProductModel::class . ',id|max:10000',
         ]);
 
         if (!$validator->validate()) {
@@ -50,8 +50,8 @@ class ProductController extends Controller
         $_POST['idProduct'] = $idProduct;
         $_POST['idService'] = $idService;
         $validator = new Validator([
-            'idProduct' => 'onlyInt|productExist:' . ProductModel::class .',id|max:10000',
-            'idService' => 'onlyInt|productServiceExist:' . ServiceModel::class .',id|max:4',
+            'idProduct' => 'onlyInt|productExist:' . ProductModel::class . ',id|max:10000',
+            'idService' => 'onlyInt|productServiceExist:' . ServiceModel::class . ',id|max:4',
         ]);
 
         if (!$validator->validate()) {
@@ -75,7 +75,7 @@ class ProductController extends Controller
         $_POST['cost'] = $correctData['cost'];
         $_POST['product_type'] = $correctData['product_type'];
         $validator = new Validator([
-            'name' => 'findProduct:' . ProductModel::class .',name|maxLength:100|minLength:3',
+            'name' => 'findProduct:' . ProductModel::class . ',name|maxLength:100|minLength:3',
             'manufactures' => 'onlyString|minLength:2|maxLength:100',
             'release_date' => 'minLength:9|maxLength:19',
             'cost' => 'onlyInt|min:10|max:100000',

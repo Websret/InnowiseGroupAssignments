@@ -5,4 +5,4 @@ You should use abstract classes, interfaces and traits with inheritance hierarch
 Tags:  PHP, OOP, GIT
 
 This application was developed using PHP 8.1, used to start nginx. Create file .env and fill in the keys. Install composer
-file and upload Data Base (file task19.sql).
+file and upload DataBase (file task19.sql).
