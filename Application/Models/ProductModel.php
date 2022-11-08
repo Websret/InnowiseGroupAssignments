@@ -3,7 +3,6 @@
 namespace Application\Models;
 
 use Application\Core\Model;
-use Application\Lib\DataTransformer;
 
 class ProductModel extends Model
 {
@@ -25,39 +24,24 @@ class ProductModel extends Model
         $stmt->execute($params);
         $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-        if (empty($result)){
+        if (empty($result)) {
             return [];
         }
         return $result[0];
     }
 
-    public function getProductService(array $params = []): array
+    public function getNameProduct(array $params = []): array
     {
         $stmt = $this->db->dbo
-            ->prepare('SELECT DISTINCT servace_name, deadline, service_cost
-                        FROM product
-                                 LEFT JOIN product_type pt on pt.type_id = product.product_type
-                                 LEFT JOIN product_t_s pts on pt.type_id = pts.type_tss_id
-                                 LEFT JOIN services s on pts.service_tss_id = s.service_id WHERE service_id = :idService
-                        AND id = :idProduct');
+            ->prepare('SELECT id, name, manufactures, release_date, cost, type_name FROM product
+                        JOIN product_type pt on pt.type_id = product.product_type WHERE name = :name');
         $stmt->execute($params);
-
         $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        if (empty($result)) {
+            return [];
+        }
         return $result[0];
-    }
-
-    public function getAllServices(array $params = []): array
-    {
-        $stmt = $this->db->dbo
-            ->prepare('SELECT DISTINCT servace_name, deadline, service_cost
-                        FROM product
-                                 LEFT JOIN product_type pt on pt.type_id = product.product_type
-                                 LEFT JOIN product_t_s pts on pt.type_id = pts.type_tss_id
-                                 LEFT JOIN services s on pts.service_tss_id = s.service_id
-                        WHERE id = :id');
-        $stmt->execute($params);
-
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     public function addProduct(array $params = []): void

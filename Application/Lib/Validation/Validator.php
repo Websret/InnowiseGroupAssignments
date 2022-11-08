@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Lib;
+namespace Application\Lib\Validation;
 
 class Validator
 {
@@ -27,6 +27,8 @@ class Validator
                 if (!$this->checkRequiredParam($param, $rules)) {
                     continue;
                 }
+            } else {
+                if (!isset($_POST[$param])) continue;
             }
 
             $this->runRules($rules, $param);
@@ -66,7 +68,7 @@ class Validator
     private function callMethodAndCheckValid(string $param): void
     {
         $methodName = $this->methodName;
-        $isValid = self::$methodName($param, $this->argument);
+        $isValid = self::$methodName($_POST[$param], $this->argument);
 
         if (!$isValid) {
             $this->createErrorSession($param);
@@ -125,6 +127,15 @@ class Validator
 
     private function min(string $param, int $value = null): bool
     {
+        if ($param < $value) {
+            $this->errorMessage = "Your query must to be more " . $value . ".";
+            return false;
+        }
+        return true;
+    }
+
+    private function minLength(string $param, int $value = null): bool
+    {
         if (strlen($param) < $value) {
             $this->errorMessage = "Your string must to be length " . $value . ".";
             return false;
@@ -136,6 +147,15 @@ class Validator
     {
         if ($param > $value) {
             $this->errorMessage = "Your query must to be less " . $value . ".";
+            return false;
+        }
+        return true;
+    }
+
+    private function maxLength(string $param, int $value = null): bool
+    {
+        if (strlen($param) > $value) {
+            $this->errorMessage = "Your string must to be length " . $value . ".";
             return false;
         }
         return true;
@@ -177,7 +197,7 @@ class Validator
         return true;
     }
 
-    private function getMethodClass(string $param, string $value): array
+    private function getMethodProduct(string $param, string $value): array
     {
         $data = explode(',', $value);
         $dbField = $data[1];
@@ -185,12 +205,60 @@ class Validator
         return $model->getProduct([$dbField => $param]);
     }
 
-    private function checkExist(int $param, string $value): bool
+    private function productExist(int $param, string $value): bool
     {
-        $row = $this->getMethodClass($param, $value);
+        $row = $this->getMethodProduct($param, $value);
 
         if (empty($row)) {
             $this->errorMessage = "Resource not found.";
+            return false;
+        }
+        return true;
+    }
+
+    private function getMethodFindProduct(string $param, string $value): array
+    {
+        $data = explode(',', $value);
+        $dbField = $data[1];
+        $model = new $data[0];
+        return $model->getNameProduct([$dbField => $param]);
+    }
+
+    private function findProduct(string $param, string $value): bool
+    {
+        $row = $this->getMethodFindProduct($param, $value);
+
+        if (!empty($row)) {
+            $this->errorMessage = "This product exist.";
+            return false;
+        }
+        return true;
+    }
+
+    private function getMethodService(string $param, string $value): array
+    {
+        $data = explode(',', $value);
+        $dbField = $data[1];
+        $model = new $data[0];
+        return $model->getAllServices([$dbField => $param]);
+    }
+
+    private function productServiceExist(int $param, string $value): bool
+    {
+        $row = $this->getMethodService($param, $value);
+
+        $findKey = --$param;
+        if (!array_key_exists($findKey, $row)) {
+            $this->errorMessage = "Service not found.";
+            return false;
+        }
+        return true;
+    }
+
+    private function serviceExist(string $param): bool
+    {
+        if ($param == 0) {
+            $this->errorMessage = "Service not found.";
             return false;
         }
         return true;
