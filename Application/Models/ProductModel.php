@@ -5,7 +5,7 @@ namespace Application\Models;
 use Application\Core\Model;
 use Application\Lib\DataTransformer;
 
-class Product extends Model
+class ProductModel extends Model
 {
     public function getAllProducts(): array
     {
@@ -25,6 +25,9 @@ class Product extends Model
         $stmt->execute($params);
         $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
+        if (empty($result)){
+            return [];
+        }
         return $result[0];
     }
 

@@ -44,4 +44,17 @@ class DataTransformer
         }
         return $array;
     }
+
+    public static function showErrorMessage(): void
+    {
+        foreach ($_SESSION['data']['errorMessage'] as $key => $value) {
+            echo $value[0];
+        }
+        exit();
+    }
+
+    private function createErrorArray(): array
+    {
+        return [];
+    }
 }
