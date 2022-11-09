@@ -4,10 +4,12 @@ namespace Application\Core;
 
 abstract class Controller
 {
+    use Json;
+
     public function json($data): void
     {
         header("Content-type: application/json; charset=utf-8");
-        echo json_encode($data);
+        $this->printJson($data);
     }
 
     public function jsonGet(): array
