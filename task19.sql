@@ -16,13 +16,65 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `product`
+-- Table structure for table `product_type_services`
 --
 
-DROP TABLE IF EXISTS `product`;
+DROP TABLE IF EXISTS `product_type_services`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `product` (
+CREATE TABLE `product_type_services` (
+  `product_type_id` int NOT NULL,
+  `service_type_id` int NOT NULL,
+  PRIMARY KEY (`product_type_id`,`service_type_id`),
+  KEY `ticket_id` (`product_type_id`),
+  KEY `nomination_id` (`service_type_id`),
+  CONSTRAINT `FK_Nominations` FOREIGN KEY (`service_type_id`) REFERENCES `services` (`service_id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_Ticket` FOREIGN KEY (`product_type_id`) REFERENCES `product_types` (`type_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `product_type_services`
+--
+
+LOCK TABLES `product_type_services` WRITE;
+/*!40000 ALTER TABLE `product_type_services` DISABLE KEYS */;
+INSERT INTO `product_type_services` VALUES (1,1),(1,2),(1,3),(1,4),(2,1),(2,2),(2,3),(3,1),(3,2),(4,1),(4,2),(4,3);
+/*!40000 ALTER TABLE `product_type_services` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `product_types`
+--
+
+DROP TABLE IF EXISTS `product_types`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `product_types` (
+  `type_id` int NOT NULL AUTO_INCREMENT,
+  `type_name` varchar(100) NOT NULL,
+  PRIMARY KEY (`type_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `product_types`
+--
+
+LOCK TABLES `product_types` WRITE;
+/*!40000 ALTER TABLE `product_types` DISABLE KEYS */;
+INSERT INTO `product_types` VALUES (1,'TV-sets'),(2,'Laptops'),(3,'Mobile phones'),(4,'Fridges');
+/*!40000 ALTER TABLE `product_types` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `products`
+--
+
+DROP TABLE IF EXISTS `products`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `products` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `manufactures` varchar(100) NOT NULL,
@@ -31,70 +83,18 @@ CREATE TABLE `product` (
   `product_type` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `foreign_key_type` (`product_type`),
-  CONSTRAINT `foreign_key_type` FOREIGN KEY (`product_type`) REFERENCES `product_type` (`type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `foreign_key_type` FOREIGN KEY (`product_type`) REFERENCES `product_types` (`type_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `product`
+-- Dumping data for table `products`
 --
 
-LOCK TABLES `product` WRITE;
-/*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,'IPhone 13','Apple','2021-11-01 08:42:05',800,3),(2,'Samsung FR3','Samsung','2020-07-24 07:44:09',1200,4),(3,'HP L310','HP','2022-02-28 08:48:40',900,2),(4,'Huawei Nova 5T','Huawei','2020-02-24 08:50:36',500,3),(5,'IPhone 14','Apple','2022-11-01 23:00:00',1100,3),(6,'Samsung TV512','Samsung','2018-05-12 22:00:00',700,1),(11,'Samsung TV514','Samsung','2018-07-27 22:00:00',800,1),(12,'Samsung TV515','Samsung','2018-07-27 22:00:00',800,1);
-/*!40000 ALTER TABLE `product` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `productType_services`
---
-
-DROP TABLE IF EXISTS `productType_services`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `productType_services` (
-  `productType_id` int NOT NULL,
-  `serviceType_id` int NOT NULL,
-  PRIMARY KEY (`productType_id`,`serviceType_id`),
-  KEY `ticket_id` (`productType_id`),
-  KEY `nomination_id` (`serviceType_id`),
-  CONSTRAINT `FK_Nominations` FOREIGN KEY (`serviceType_id`) REFERENCES `services` (`service_id`) ON DELETE CASCADE,
-  CONSTRAINT `FK_Ticket` FOREIGN KEY (`productType_id`) REFERENCES `product_type` (`type_id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `productType_services`
---
-
-LOCK TABLES `productType_services` WRITE;
-/*!40000 ALTER TABLE `productType_services` DISABLE KEYS */;
-INSERT INTO `productType_services` VALUES (1,1),(1,2),(1,3),(1,4),(2,1),(2,2),(2,3),(3,1),(3,2),(4,1),(4,2),(4,3);
-/*!40000 ALTER TABLE `productType_services` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `product_type`
---
-
-DROP TABLE IF EXISTS `product_type`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `product_type` (
-  `type_id` int NOT NULL AUTO_INCREMENT,
-  `type_name` varchar(100) NOT NULL,
-  PRIMARY KEY (`type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `product_type`
---
-
-LOCK TABLES `product_type` WRITE;
-/*!40000 ALTER TABLE `product_type` DISABLE KEYS */;
-INSERT INTO `product_type` VALUES (1,'TV-sets'),(2,'Laptops'),(3,'Mobile phones'),(4,'Fridges');
-/*!40000 ALTER TABLE `product_type` ENABLE KEYS */;
+LOCK TABLES `products` WRITE;
+/*!40000 ALTER TABLE `products` DISABLE KEYS */;
+INSERT INTO `products` VALUES (1,'IPhone 13','Apple','2021-11-01 08:42:05',800,3),(2,'Samsung FR3','Samsung','2020-07-24 07:44:09',1200,4),(3,'HP L310','HP','2022-02-28 08:48:40',900,2),(4,'Huawei Nova 5T','Huawei','2020-02-24 08:50:36',500,3),(5,'IPhone 14','Apple','2022-11-01 23:00:00',1100,3),(6,'Samsung TV512','Samsung','2018-05-12 22:00:00',700,1),(11,'Samsung TV514','Samsung','2018-07-27 22:00:00',800,1),(15,'Samsung TV525','Samsung','2018-07-27 22:00:00',800,1);
+/*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -106,7 +106,7 @@ DROP TABLE IF EXISTS `services`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `services` (
   `service_id` int NOT NULL AUTO_INCREMENT,
-  `servace_name` varchar(50) NOT NULL,
+  `service_name` varchar(50) NOT NULL,
   `deadline` varchar(50) NOT NULL,
   `service_cost` int NOT NULL,
   PRIMARY KEY (`service_id`)
@@ -132,4 +132,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-08 14:35:35
+-- Dump completed on 2022-11-10 13:23:39

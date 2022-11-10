@@ -202,7 +202,11 @@ class Validator
         $data = explode(',', $value);
         $dbField = $data[1];
         $model = new $data[0];
-        return $model->getProduct([$dbField => $param]);
+        return $model
+            ->select('id', 'name', 'manufactures', 'release_date', 'cost', 'type_name')
+            ->join('product_types', 'product_types.type_id', '=', 'products.product_type')
+            ->where('id = :id')
+            ->get([$dbField => $param]);
     }
 
     private function productExist(int $param, string $value): bool
@@ -221,7 +225,11 @@ class Validator
         $data = explode(',', $value);
         $dbField = $data[1];
         $model = new $data[0];
-        return $model->getNameProduct([$dbField => $param]);
+        return $model
+            ->select('id', 'name', 'manufactures', 'release_date', 'cost', 'type_name')
+            ->join('product_types', 'product_types.type_id', '=', 'products.product_type')
+            ->where('name = :name')
+            ->get([$dbField => $param]);
     }
 
     private function findProduct(string $param, string $value): bool
@@ -240,7 +248,13 @@ class Validator
         $data = explode(',', $value);
         $dbField = $data[1];
         $model = new $data[0];
-        return $model->getAllServices([$dbField => $param]);
+        return $model
+            ->select('service_name', 'deadline', 'service_cost')
+            ->join('product_types', 'product_types.type_id', '=', 'products.product_type')
+            ->join('product_type_services', 'product_types.type_id', '=', 'product_type_services.product_type_id')
+            ->join('services', 'product_type_services.service_type_id', '=', 'services.service_id')
+            ->where('id = :id')
+            ->get([$dbField => $param]);
     }
 
     private function productServiceExist(int $param, string $value): bool

@@ -22,7 +22,13 @@ class ProductController extends Controller
 
     public function index(): void
     {
-        $this->json($this->product->getAllProducts());
+        $products = $this->product
+            ->select('id', 'name', 'manufactures', 'release_date', 'cost', 'type_name')
+            ->join('product_types', 'product_types.type_id', '=', 'products.product_type')
+            ->orderBy('id', 'ASC')
+            ->get();
+
+        $this->json($products);
     }
 
     public function show(int $id): void
@@ -37,10 +43,20 @@ class ProductController extends Controller
             exit();
         }
 
-        $dataProduct = $this->product->getProduct(['id' => $id]);
-        $dataServices = $this->service->getAllServices(['id' => $id]);
+        $dataProduct = $this->product
+            ->select('id', 'name', 'manufactures', 'release_date', 'cost', 'type_name')
+            ->join('product_types', 'product_types.type_id', '=', 'products.product_type')
+            ->where('id = :id')
+            ->get(['id' => $id]);
+        $dataServices = $this->service
+            ->select('service_name', 'deadline', 'service_cost')
+            ->join('product_types', 'product_types.type_id', '=', 'products.product_type')
+            ->join('product_type_services', 'product_types.type_id', '=', 'product_type_services.product_type_id')
+            ->join('services', 'product_type_services.service_type_id', '=', 'services.service_id')
+            ->where('id = :id')
+            ->get(['id' => $id]);
         $dataServices = ProductTransformer::changeData($dataServices);
-        $data = ProductTransformer::associationData($dataProduct, $dataServices);
+        $data = ProductTransformer::associationData($dataProduct[0], $dataServices);
 
         $this->json($data);
     }
@@ -59,13 +75,23 @@ class ProductController extends Controller
             exit();
         }
 
-        $dataProduct = $this->product->getProduct(['id' => $idProduct]);
-        $dataService = $this->service->getProductService(['idProduct' => $idProduct, 'idService' => $idService]);
-        $data = ProductTransformer::associationDataAndPrice($dataProduct, $dataService);
+        $dataProduct = $this->product
+            ->select('id', 'name', 'manufactures', 'release_date', 'cost', 'type_name')
+            ->join('product_types', 'product_types.type_id', '=', 'products.product_type')
+            ->where('id = :id')
+            ->get(['id' => $idProduct]);
+        $dataService = $this->service
+            ->select('service_name', 'deadline', 'service_cost')
+            ->join('product_types', 'product_types.type_id', '=', 'products.product_type')
+            ->join('product_type_services', 'product_types.type_id', '=', 'product_type_services.product_type_id')
+            ->join('services', 'product_type_services.service_type_id', '=', 'services.service_id')
+            ->where('service_id = :idService', 'id = :idProduct')
+            ->get(['idService' => $idService, 'idProduct' => $idProduct]);
+        $data = ProductTransformer::associationDataAndPrice($dataProduct[0], $dataService[0]);
         $this->json($data);
     }
 
-    public function postCreateProductAction(array $parameter = []): void
+    public function postCreateProductAction(): void
     {
         $data = $this->jsonGet();
         $correctData = ProductTransformer::changeKeyData($data);
@@ -87,6 +113,9 @@ class ProductController extends Controller
             exit();
         }
 
-        $this->product->addProduct($correctData);
+        $this->product
+            ->insert('name', 'manufactures', 'release_date', 'cost', 'product_type')
+            ->values(':name', ':manufactures', ':release_date', ':cost', ':product_type')
+            ->add($correctData);
     }
 }
