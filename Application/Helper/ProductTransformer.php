@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Lib\Helper;
+namespace Application\Helper;
 
 class ProductTransformer
 {

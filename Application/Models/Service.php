@@ -4,7 +4,7 @@ namespace Application\Models;
 
 use Application\Core\Model;
 
-class ServiceModel extends Model
+class Service extends Model
 {
     public function table(): string
     {

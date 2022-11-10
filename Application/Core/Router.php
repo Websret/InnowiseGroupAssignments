@@ -2,6 +2,8 @@
 
 namespace Application\Core;
 
+use Application\Helper\ProductTransformer;
+
 class Router
 {
     private const REGEXES = ['[0-9]+', '[a-z]+'];
@@ -19,6 +21,7 @@ class Router
             $isMatched = preg_match("/^" . str_replace('/', '\/', $route['uri']) . "$/", rtrim($urlParts['path'], '/'));
 
             if ($isMatched) {
+                $this->setPostBody();
                 $this->callMethod($route, $urlParts);
                 break;
             }
@@ -26,6 +29,19 @@ class Router
 
         if (!$isMatched) {
             echo '404 not Found';
+        }
+    }
+
+    private function setPostBody(): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = file_get_contents('php://input');
+            $data = json_decode($data, true);
+            $correctData = ProductTransformer::changeKeyData($data);
+
+            foreach ($correctData as $key => $value) {
+                $_POST[$key] = $value;
+            }
         }
     }
 

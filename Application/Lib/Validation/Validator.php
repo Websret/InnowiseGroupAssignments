@@ -243,7 +243,7 @@ class Validator
         return true;
     }
 
-    private function getMethodService(string $param, string $value): array
+    private function getMethodService(array $params, string $value): array
     {
         $data = explode(',', $value);
         $dbField = $data[1];
@@ -254,12 +254,13 @@ class Validator
             ->join('product_type_services', 'product_types.type_id', '=', 'product_type_services.product_type_id')
             ->join('services', 'product_type_services.service_type_id', '=', 'services.service_id')
             ->where('id = :id')
-            ->get([$dbField => $param]);
+            ->get([$dbField => $params[2]]);
     }
 
     private function productServiceExist(int $param, string $value): bool
     {
-        $row = $this->getMethodService($param, $value);
+        $params = explode('/',$_SERVER['REQUEST_URI']);
+        $row = $this->getMethodService($params, $value);
 
         $findKey = --$param;
         if (!array_key_exists($findKey, $row)) {

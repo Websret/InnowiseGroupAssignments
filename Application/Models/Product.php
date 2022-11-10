@@ -4,7 +4,7 @@ namespace Application\Models;
 
 use Application\Core\Model;
 
-class ProductModel extends Model
+class Product extends Model
 {
     public function table(): string
     {
