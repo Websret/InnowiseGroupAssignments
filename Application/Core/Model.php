@@ -79,7 +79,7 @@ abstract class Model
     public function get(?array $params = []): array|bool
     {
         $stmt = $this->db->dbo
-            ->prepare($this->__toString());
+            ->prepare($this);
         $stmt->execute($params);
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
@@ -87,7 +87,7 @@ abstract class Model
     public function add(array $params = []): void
     {
         $this->db->dbo
-            ->prepare($this->__toString())
+            ->prepare($this)
             ->execute($params);
     }
 }
