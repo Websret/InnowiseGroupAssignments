@@ -20,12 +20,22 @@ class Router
 
             if ($isMatched) {
                 $this->callMethod($route, $urlParts);
+                $this->setPostBody();
                 break;
             }
+
         }
 
         if (!$isMatched) {
             echo '404 not Found';
+        }
+    }
+
+    private function setPostBody()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = file_get_contents('php://input');
+            $data = json_decode($data, true);
         }
     }
 

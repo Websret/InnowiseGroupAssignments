@@ -6,19 +6,15 @@ class ProductTransformer
 {
     public static function associationData(array $array1, array $array2): array
     {
-        return $array1 + [
-                'services' => $array2
-            ];
+        return $array1 + ['services' => $array2];
     }
 
     public static function associationDataAndPrice(array $array1, array $array2): array
     {
-        $newArray = $array1 + [
-                'service' => $array2,
-            ];
+        $newArray = $array1 + ['service' => $array2];
         $totalPrice = $array1['cost'] + $array2['service_cost'];
-
         $newArray['total_cost'] = $totalPrice;
+
         return $newArray;
     }
 

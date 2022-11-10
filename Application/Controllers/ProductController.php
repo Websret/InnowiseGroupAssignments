@@ -48,6 +48,7 @@ class ProductController extends Controller
             ->join('product_types', 'product_types.type_id', '=', 'products.product_type')
             ->where('id = :id')
             ->get(['id' => $id]);
+
         $dataServices = $this->service
             ->select('service_name', 'deadline', 'service_cost')
             ->join('product_types', 'product_types.type_id', '=', 'products.product_type')
@@ -55,7 +56,7 @@ class ProductController extends Controller
             ->join('services', 'product_type_services.service_type_id', '=', 'services.service_id')
             ->where('id = :id')
             ->get(['id' => $id]);
-        $dataServices = ProductTransformer::changeData($dataServices);
+
         $data = ProductTransformer::associationData($dataProduct[0], $dataServices);
 
         $this->json($data);
@@ -80,6 +81,7 @@ class ProductController extends Controller
             ->join('product_types', 'product_types.type_id', '=', 'products.product_type')
             ->where('id = :id')
             ->get(['id' => $idProduct]);
+
         $dataService = $this->service
             ->select('service_name', 'deadline', 'service_cost')
             ->join('product_types', 'product_types.type_id', '=', 'products.product_type')
