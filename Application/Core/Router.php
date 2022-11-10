@@ -37,9 +37,8 @@ class Router
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = file_get_contents('php://input');
             $data = json_decode($data, true);
-            $correctData = ProductTransformer::changeKeyData($data);
 
-            foreach ($correctData as $key => $value) {
+            foreach ($data as $key => $value) {
                 $_POST[$key] = $value;
             }
         }

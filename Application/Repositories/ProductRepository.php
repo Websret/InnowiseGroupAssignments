@@ -5,7 +5,7 @@ namespace Application\Repositories;
 use Application\Models\Product;
 use Application\Models\Service;
 
-class ProductQueries
+class ProductRepository
 {
     private Service $service;
 

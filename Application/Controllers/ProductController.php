@@ -7,27 +7,23 @@ use Application\Helper\ProductTransformer;
 use Application\Lib\Validation\Validator;
 use Application\Models\Product;
 use Application\Models\Service;
-use Application\Repositories\ProductQueries;
+use Application\Repositories\ProductRepository;
 
 class ProductController extends Controller
 {
     private Product $product;
 
-    private Service $service;
-
-    private ProductQueries $queries;
+    private ProductRepository $productRepository;
 
     public function __construct()
     {
         $this->product = new Product();
-        $this->service = new Service();
-        $this->queries = new ProductQueries();
+        $this->productRepository = new ProductRepository();
     }
 
     public function index(): void
     {
-        $products = $this->queries->getAllProduct();
-
+        $products = $this->productRepository->getAllProduct();
         $this->json($products);
     }
 
@@ -43,8 +39,8 @@ class ProductController extends Controller
             exit();
         }
 
-        $dataProduct = $this->queries->getProduct($id);
-        $dataServices = $this->queries->getAllServices($id);
+        $dataProduct = $this->productRepository->getProduct($id);
+        $dataServices = $this->productRepository->getAllServices($id);
         $data = ProductTransformer::associationData($dataProduct[0], $dataServices);
 
         $this->json($data);
@@ -64,21 +60,21 @@ class ProductController extends Controller
             exit();
         }
 
-        $dataProduct = $this->queries->getProduct($idProduct);
-        $dataService = $this->queries->getProductService($idProduct, $idService);
+        $dataProduct = $this->productRepository->getProduct($idProduct);
+        $dataService = $this->productRepository->getProductService($idProduct, $idService);
         $data = ProductTransformer::associationDataAndPrice($dataProduct[0], $dataService[0]);
         $this->json($data);
     }
 
     public function postCreateProductAction(): void
     {
-        $correctData = $_POST;
+        $_POST = ProductTransformer::changeKeyData($_POST);
         $validator = new Validator([
-            'name' => 'findProduct:' . Product::class . ',name|maxLength:100|minLength:3',
-            'manufactures' => 'onlyString|minLength:2|maxLength:100',
-            'release_date' => 'minLength:9|maxLength:19',
-            'cost' => 'onlyInt|min:10|max:100000',
-            'product_type' => 'onlyInt|serviceExist:product_type|max:4',
+            'name' => 'findProduct:' . Product::class . ',name|maxLength:100|minLength:3|required',
+            'manufactures' => 'onlyString|minLength:2|maxLength:100|required',
+            'release_date' => 'minLength:9|maxLength:19|required',
+            'cost' => 'onlyInt|min:10|max:100000|required',
+            'product_type' => 'onlyInt|serviceExist:product_type|max:4|required',
         ]);
 
         if (!$validator->validate()) {
@@ -89,6 +85,6 @@ class ProductController extends Controller
         $this->product
             ->insert('name', 'manufactures', 'release_date', 'cost', 'product_type')
             ->values(':name', ':manufactures', ':release_date', ':cost', ':product_type')
-            ->add($correctData);
+            ->add($_POST);
     }
 }
