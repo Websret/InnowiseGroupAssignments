@@ -18,15 +18,6 @@ class ProductTransformer
         return $newArray;
     }
 
-    public static function changeData(array &$array): array
-    {
-        $newArray = [];
-        foreach ($array as $value) {
-            $newArray[] = $value;
-        }
-        return $newArray;
-    }
-
     public static function changeKeyData(array $array): array
     {
         $pt = new ProductTransformer();
