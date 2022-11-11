@@ -2,6 +2,8 @@
 
 namespace Application\Lib\Validation;
 
+use Application\Repositories\ProductRepository;
+
 class Validator
 {
     private array $params;
@@ -12,9 +14,12 @@ class Validator
 
     private string|null $argument = null;
 
+    private ProductRepository $productRepository;
+
     public function __construct(array $params = [])
     {
         $this->params = $params;
+        $this->productRepository = new ProductRepository();
     }
 
     public function validate(): bool
@@ -197,21 +202,14 @@ class Validator
         return true;
     }
 
-    private function getMethodProduct(string $param, string $value): array
+    private function getMethodProduct(string $param): array
     {
-        $data = explode(',', $value);
-        $dbField = $data[1];
-        $model = new $data[0];
-        return $model
-            ->select('id', 'name', 'manufactures', 'release_date', 'cost', 'type_name')
-            ->join('product_types', 'product_types.type_id', '=', 'products.product_type')
-            ->where('id = :id')
-            ->get([$dbField => $param]);
+        return $this->productRepository->getProduct($param);
     }
 
     private function productExist(int $param, string $value): bool
     {
-        $row = $this->getMethodProduct($param, $value);
+        $row = $this->getMethodProduct($param);
 
         if (empty($row)) {
             $this->errorMessage = "Resource not found.";
@@ -226,8 +224,8 @@ class Validator
         $dbField = $data[1];
         $model = new $data[0];
         return $model
-            ->select('id', 'name', 'manufactures', 'release_date', 'cost', 'type_name')
-            ->join('product_types', 'product_types.type_id', '=', 'products.product_type')
+            ->select('products.id', 'name', 'manufactures', 'release_date', 'cost', 'type_name')
+            ->join('product_types', 'product_types.id', '=', 'products.product_type')
             ->where('name = :name')
             ->get([$dbField => $param]);
     }
@@ -243,24 +241,15 @@ class Validator
         return true;
     }
 
-    private function getMethodService(array $params, string $value): array
+    private function getMethodService(array $params): array
     {
-        $data = explode(',', $value);
-        $dbField = $data[1];
-        $model = new $data[0];
-        return $model
-            ->select('service_name', 'deadline', 'service_cost')
-            ->join('product_types', 'product_types.type_id', '=', 'products.product_type')
-            ->join('product_type_services', 'product_types.type_id', '=', 'product_type_services.product_type_id')
-            ->join('services', 'product_type_services.service_type_id', '=', 'services.service_id')
-            ->where('id = :id')
-            ->get([$dbField => $params[2]]);
+        return $this->productRepository->getAllServices($params[2]);
     }
 
     private function productServiceExist(int $param, string $value): bool
     {
         $params = explode('/',$_SERVER['REQUEST_URI']);
-        $row = $this->getMethodService($params, $value);
+        $row = $this->getMethodService($params);
 
         $findKey = --$param;
         if (!array_key_exists($findKey, $row)) {

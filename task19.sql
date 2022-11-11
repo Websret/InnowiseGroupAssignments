@@ -23,13 +23,14 @@ DROP TABLE IF EXISTS `product_type_services`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product_type_services` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `product_type_id` int NOT NULL,
   `service_type_id` int NOT NULL,
-  PRIMARY KEY (`product_type_id`,`service_type_id`),
+  PRIMARY KEY (`id`),
   KEY `ticket_id` (`product_type_id`),
   KEY `nomination_id` (`service_type_id`),
-  CONSTRAINT `FK_Nominations` FOREIGN KEY (`service_type_id`) REFERENCES `services` (`service_id`) ON DELETE CASCADE,
-  CONSTRAINT `FK_Ticket` FOREIGN KEY (`product_type_id`) REFERENCES `product_types` (`type_id`) ON DELETE CASCADE
+  CONSTRAINT `FK_Nominations` FOREIGN KEY (`service_type_id`) REFERENCES `services` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_Ticket` FOREIGN KEY (`product_type_id`) REFERENCES `product_types` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -39,7 +40,7 @@ CREATE TABLE `product_type_services` (
 
 LOCK TABLES `product_type_services` WRITE;
 /*!40000 ALTER TABLE `product_type_services` DISABLE KEYS */;
-INSERT INTO `product_type_services` VALUES (1,1),(1,2),(1,3),(1,4),(2,1),(2,2),(2,3),(3,1),(3,2),(4,1),(4,2),(4,3);
+INSERT INTO `product_type_services` VALUES (1,1,1),(2,1,2),(3,1,3),(4,1,4),(5,2,1),(6,2,2),(7,2,3),(8,3,1),(9,3,2),(10,4,1),(11,4,2),(12,4,3);
 /*!40000 ALTER TABLE `product_type_services` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -51,9 +52,9 @@ DROP TABLE IF EXISTS `product_types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `product_types` (
-  `type_id` int NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `type_name` varchar(100) NOT NULL,
-  PRIMARY KEY (`type_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -83,8 +84,8 @@ CREATE TABLE `products` (
   `product_type` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `foreign_key_type` (`product_type`),
-  CONSTRAINT `foreign_key_type` FOREIGN KEY (`product_type`) REFERENCES `product_types` (`type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `foreign_key_type` FOREIGN KEY (`product_type`) REFERENCES `product_types` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,11 +106,11 @@ DROP TABLE IF EXISTS `services`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `services` (
-  `service_id` int NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `service_name` varchar(50) NOT NULL,
   `deadline` varchar(50) NOT NULL,
   `service_cost` int NOT NULL,
-  PRIMARY KEY (`service_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -132,4 +133,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-10 13:23:39
+-- Dump completed on 2022-11-11  9:54:56
