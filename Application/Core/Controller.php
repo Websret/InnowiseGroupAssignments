@@ -2,19 +2,21 @@
 
 namespace Application\Core;
 
+use Application\Models\Car;
+use Application\Repositories\CarRepository;
+
 abstract class Controller
 {
-    use Json;
+    public View $view;
 
-    public function json($data): void
-    {
-        header("Content-type: application/json; charset=utf-8");
-        $this->printJson($data);
-    }
+    protected Car $cars;
 
-    public function jsonGet(): array
+    protected CarRepository $carRepository;
+
+    public function __construct(?array $route = [])
     {
-        $data = file_get_contents('php://input');
-        return json_decode($data, true);
+        $this->view = new View($route);
+        $this->cars = new Car();
+        $this->carRepository = new CarRepository();
     }
 }

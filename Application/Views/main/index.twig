@@ -1,0 +1,65 @@
+{% extends "layouts/default.twig" %}
+
+{% block title %}Home page{% endblock %}
+
+{% block namepage %}Home page{% endblock %}
+
+{% block content %}
+    <div class="row">
+
+        <div class="col-3 align-self-start order-first">
+            <h6>List of car models currently on sale:</h6>
+            {% for models in modelsList %}
+                {% for model in models %}
+                    <li>{{ model }}</li>
+                {% endfor %}
+            {% endfor %}
+        </div>
+
+        <div class="col-9">
+            <p>The average price on cars sold for all time - {{ averagePriceSoldCars }}</p>
+            <p>The average price on the cars sold today - {{ averagePriceSoldCarsToday }}</p>
+            <H6>Cars sold last year, divided by day</H6>
+            <table>
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Number of cars sold</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for soldCar in soldCarsLastYearArray %}
+                    <tr>
+                        <td>{{ soldCar.date_of_sale }}</td>
+                        <td>{{ soldCar.number_cars_sold }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <H6>Unsold cars, sorted by descending year of manufacture (first priority), by
+                ascending price (second priority)</H6>
+            <table>
+                <thead>
+                <tr>
+                    <th>Car model</th>
+                    <th>Year of production</th>
+                    <th>Color</th>
+                    <th>Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for unsoldCar in unsoldCarsArray %}
+                    <tr>
+                        <td>{{ unsoldCar.model }}</td>
+                        <td>{{ unsoldCar.year_of_production }}</td>
+                        <td>{{ unsoldCar.color }}</td>
+                        <td>{{ unsoldCar.price }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+{% endblock %}

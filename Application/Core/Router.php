@@ -2,8 +2,6 @@
 
 namespace Application\Core;
 
-use Application\Helper\ProductTransformer;
-
 class Router
 {
     private const REGEXES = ['[0-9]+', '[a-z]+'];
