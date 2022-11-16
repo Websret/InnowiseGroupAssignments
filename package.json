@@ -1,0 +1,23 @@
+{
+  "name": "task21",
+  "version": "1.0.0",
+  "description": "Task 21. Car Showroom Dashboard The dashboard should display the following information: the average price on cars sold for all time - number the average price on the cars sold today - number cars sold last year, divided by day - table Table format",
+  "main": "tailwind.config.js",
+  "dependencies": {
+    "tailwindcss": "^1.9.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Websret/InnowiseGroupAssignments.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Websret/InnowiseGroupAssignments/issues"
+  },
+  "homepage": "https://github.com/Websret/InnowiseGroupAssignments#readme"
+}
