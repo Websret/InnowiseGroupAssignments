@@ -3,9 +3,18 @@
 namespace Application\Controllers;
 
 use Application\Core\Controller;
+use Application\Repositories\CarRepository;
 
 class MainController extends Controller
 {
+    private CarRepository $carRepository;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->carRepository = new CarRepository();
+    }
+
     public function index(): void
     {
         $averagePriceSoldCars = $this->carRepository->getAveragePriceSoldCars();
