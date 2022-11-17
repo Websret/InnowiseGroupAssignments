@@ -1,11 +1,10 @@
 <?php
 
-namespace App\View\Components\layouts;
+namespace App\View\Components\registration;
 
-use Illuminate\Support\Facades\Blade;
 use Illuminate\View\Component;
 
-class layout extends Component
+class create extends Component
 {
     /**
      * Create a new component instance.
@@ -17,11 +16,6 @@ class layout extends Component
         //
     }
 
-    public function boot()
-    {
-        Blade::componentNamespace('app\\Views\\Components', 'package');
-    }
-
     /**
      * Get the view / contents that represent the component.
      *
@@ -29,10 +23,6 @@ class layout extends Component
      */
     public function render()
     {
-        return <<<'blade'
-<div>
-    <!-- It is never too late to be what you might have been. - George Eliot -->
-</div>
-blade;
+        return view('components.registration.create');
     }
 }
