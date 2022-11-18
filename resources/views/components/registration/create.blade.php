@@ -1,11 +1,14 @@
 <x-layouts.layout>
     <x-slot name="title">
-        Registration
+        Registration page
+    </x-slot>
+    <x-slot name="namepage">
+        Registration page
     </x-slot>
 
     <h2>Register</h2>
     <form method="POST" action="/register">
-{{--        {{ $component->formatAlert('Server Error') }}--}}
+        <x-partials.formerrors/>
         {{ csrf_field() }}
         <div class="form-group">
             <label for="name">Name:</label>
@@ -20,6 +23,12 @@
         <div class="form-group">
             <label for="password">Password:</label>
             <input type="password" class="form-control" id="password" name="password">
+        </div>
+
+        <div class="form-group">
+            <label for="password_confirmation">Password Confirmation:</label>
+            <input type="password" class="form-control" id="password_confirmation"
+                   name="password_confirmation">
         </div>
 
         <div class="form-group">

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\View\Components\auth;
+namespace App\View\Components\dashboard;
 
 use Illuminate\View\Component;
 
-class register extends Component
+class services extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class register extends Component
      */
     public function render()
     {
-        return view('components.auth.register');
+        return view('components.dashboard.services');
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\View\Components\auth;
+namespace App\View\Components\products;
 
 use Illuminate\View\Component;
 
-class login extends Component
+class edit extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class login extends Component
      */
     public function render()
     {
-        return view('components.auth.login');
+        return view('components.products.edit');
     }
 }

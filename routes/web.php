@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\SessionsController;
@@ -18,9 +19,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ProductController::class, 'show']);
 
+Route::get('/admin/dashboard', [DashboardController::class, 'show']);
+
+Route::get('/product/create', [ProductController::class, 'create']);
+Route::post('/product/create', [ProductController::class, 'store']);
+Route::get('/product/{id}', [ProductController::class, 'index'])->where('id', '[0-9]+');
+Route::get('/product/{id}/edit', [ProductController::class, 'edit']);
+Route::put('/product/{id}/edit', [ProductController::class, 'update']);
+Route::delete('/product/{id}/delete', [ProductController::class, 'delete']);
+
 Route::get('/register', [RegistrationController::class, 'create']);
 Route::post('/register', [RegistrationController::class, 'store']);
 
 Route::get('/login', [SessionsController::class, 'create']);
 Route::post('/login', [SessionsController::class, 'store']);
-Route::post('/logout', [SessionsController::class, 'destroy']);
+Route::get('/logout', [SessionsController::class, 'destroy']);
