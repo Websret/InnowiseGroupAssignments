@@ -5,6 +5,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\SessionsController;
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,9 +25,15 @@ Route::get('/admin/dashboard', [DashboardController::class, 'show']);
 Route::get('/product/create', [ProductController::class, 'create']);
 Route::post('/product/create', [ProductController::class, 'store']);
 Route::get('/product/{id}', [ProductController::class, 'index'])->where('id', '[0-9]+');
-Route::get('/product/{id}/edit', [ProductController::class, 'edit']);
-Route::put('/product/{id}/edit', [ProductController::class, 'update']);
-Route::delete('/product/{id}/delete', [ProductController::class, 'delete']);
+Route::get('/product/{id}/edit', [ProductController::class, 'edit'])->where('id', '[0-9]+');
+Route::put('/product/{id}/edit', [ProductController::class, 'update'])->where('id', '[0-9]+');
+Route::delete('/product/{id}/delete', [ProductController::class, 'delete'])->where('id', '[0-9]+');
+
+Route::get('/service/create', [ServiceController::class, 'create']);
+Route::post('/service/create', [ServiceController::class, 'store']);
+Route::get('/service/{id}/edit', [ServiceController::class, 'edit'])->where('id', '[0-9]+');
+Route::put('/service/{id}/edit', [ServiceController::class, 'update'])->where('id', '[0-9]+');
+Route::delete('/service/{id}/delete', [ServiceController::class, 'delete'])->where('id', '[0-9]+');
 
 Route::get('/register', [RegistrationController::class, 'create']);
 Route::post('/register', [RegistrationController::class, 'store']);

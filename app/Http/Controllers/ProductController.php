@@ -99,4 +99,13 @@ class ProductController extends Controller
 
         return redirect()->to('/admin/dashboard');
     }
+
+    public function delete(int $id): RedirectResponse
+    {
+        DB::table('products')
+            ->where('id', '=', $id)
+            ->delete();
+
+        return redirect()->to('/admin/dashboard');
+    }
 }
