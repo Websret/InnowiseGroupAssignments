@@ -4,7 +4,7 @@
             <h3>Products table:</h3>
         </div>
         <div class="col d-flex flex-row-reverse">
-            <a href="/product/create">
+            <a href="{{ route('product.create') }}">
                 <button type="button" class="my-item btn btn-primary ">Add new
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-patch-plus" viewBox="0 0 16 16">
@@ -39,7 +39,7 @@
                 <td>{{ $product->release_date }}</td>
                 <td>{{ $product->cost }}</td>
                 <td>{{ $product->description }}</td>
-                <td>{{ $product->type_name }}</td>
+                <td>{{ $product->type->type_name }}</td>
                 <td class="form-action"><a href="/product/{{ $product->id }}/edit">
                         <button type="button" class="btn btn-success">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -49,7 +49,7 @@
                             </svg>
                         </button>
                     </a>
-                    <form action="/product/{{ $product->id }}/delete" method="POST">
+                    <form action="/product/{{ $product->id }}" method="POST">
                         @method('DELETE')
                         {{ csrf_field() }}
                         <button type="submit" class="btn btn-danger">

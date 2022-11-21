@@ -7,7 +7,7 @@
     </x-slot>
 
     <h2>Create service</h2>
-    <form method="POST" action="/service/create">
+    <form method="POST" action="{{ route('service.store') }}">
         <x-partials.formerrors/>
         {{ csrf_field() }}
         <div class="form-group">

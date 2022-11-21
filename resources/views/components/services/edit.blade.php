@@ -7,7 +7,7 @@
     </x-slot>
 
     <h2>Edit service</h2>
-    <form method="POST" action="/service/{{ $service[0]->id }}/edit">
+    <form method="POST" action="/service/{{ $service[0]->id }}">
         @method('PUT')
         <x-partials.formerrors/>
         {{ csrf_field() }}

@@ -43,7 +43,7 @@
                             </svg>
                         </button>
                     </a>
-                    <form action="/service/{{ $service->id }}/delete" method="POST">
+                    <form action="/service/{{ $service->id }}" method="POST">
                         @method('DELETE')
                         {{ csrf_field() }}
                         <button type="submit" class="btn btn-danger">
