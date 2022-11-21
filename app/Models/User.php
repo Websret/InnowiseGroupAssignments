@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = bcrypt($password);
     }
+
+    public function isAdmin(): bool
+    {
+        return $this->type_id === 2;
+    }
 }

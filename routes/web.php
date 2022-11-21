@@ -20,15 +20,16 @@ use \App\Http\Controllers\ServiceController;
 
 Route::get('/', [ProductController::class, 'index'])->name('index');
 
-Route::get('/admin/dashboard', [DashboardController::class, 'show'])->name('admin.dashboard');
+//Route::group(['middleware' => ['auth', 'isadmin'], 'namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], function() {
+Route::middleware(['auth', 'isAdmin'])->group(function() {
+    Route::get('/admin/dashboard', [DashboardController::class, 'show'])->name('admin.dashboard');
 
-Route::resource('/product', ProductController::class);
+    Route::resource('/product', ProductController::class);
 
-Route::resource('/service', ServiceController::class)->except('index', 'show');
+    Route::resource('/service', ServiceController::class)->except('index', 'show');
+});
 
-Route::get('/register', [RegistrationController::class, 'create']);
-Route::post('/register', [RegistrationController::class, 'store']);
 Route::resource('/register', RegistrationController::class)->only('create', 'store');
 
-Route::resource('/login', ServiceController::class)->only('create', 'store');
+Route::resource('/login', SessionsController::class)->only('create', 'store');
 Route::get('/logout', [SessionsController::class, 'destroy'])->name('logout');

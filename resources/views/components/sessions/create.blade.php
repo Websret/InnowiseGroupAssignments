@@ -8,7 +8,7 @@
 
     <h2>Log In</h2>
 
-    <form method="POST" action="/login">
+    <form method="POST" action="{{ route('login.store') }}">
         {{ csrf_field() }}
         <x-partials.formerrors/>
         <div class="form-group">

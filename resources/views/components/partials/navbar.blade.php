@@ -8,14 +8,14 @@
             </a>
             <div class="dropdown-content">
                 @if( auth()->user()->type_id == 2)
-                    <a href="/admin/dashboard">Dashboard</a>
+                    <a href="{{ route('admin.dashboard') }}">Dashboard</a>
                 @endif
-                <a href="/logout">Log Out</a>
+                <a href="{{ route('logout') }}">Log Out</a>
             </div>
         </div>
 {{--        <a class="p-2 text-dark" href="/logout">Log Out</a>--}}
     @else
-        <a class="p-2 text-dark" href="/login">Log In</a>
-        <a class="p-2 text-dark" href="/register">Register</a>
+        <a class="p-2 text-dark" href="{{ route('login.create') }}">Log In</a>
+        <a class="p-2 text-dark" href="{{ route('register.create') }}">Register</a>
     @endif
 </nav>
