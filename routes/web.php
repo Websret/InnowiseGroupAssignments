@@ -20,7 +20,6 @@ use \App\Http\Controllers\ServiceController;
 
 Route::get('/', [ProductController::class, 'index'])->name('index');
 
-//Route::group(['middleware' => ['auth', 'isadmin'], 'namespace' => 'Admin', 'prefix' => 'admin', 'as' => 'admin.'], function() {
 Route::middleware(['auth', 'isAdmin'])->group(function() {
     Route::get('/admin/dashboard', [DashboardController::class, 'show'])->name('admin.dashboard');
 
