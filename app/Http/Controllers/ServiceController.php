@@ -6,6 +6,7 @@ use App\Http\Requests\UpdateServiceRequest;
 use App\Models\ProductType;
 use App\Models\Service;
 use App\Models\TypeService;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use \Illuminate\Contracts\View\Factory;
 use \Illuminate\Contracts\View\View;
 use \Illuminate\Contracts\Foundation\Application;
@@ -24,7 +25,7 @@ class ServiceController extends Controller
             ['service_name' =>'unique:App\Models\Service,service_name']
         );
         Service::create($request->validated());
-        $id = Service::where($request->validated())->select('id')->firstOrNew();
+        $id = Service::where($request->validated())->select('id')->firstOrFail();
         $this->addLinksTypeServices($id['id']);
 
         return redirect()->route('admin.dashboard');

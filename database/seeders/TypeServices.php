@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\ProductType;
+use App\Models\Service;
+use App\Models\TypeService;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class TypeServices extends Seeder
 {
@@ -15,18 +16,12 @@ class TypeServices extends Seeder
      */
     public function run()
     {
-        DB::table('product_type_services')->insert([
-            ['product_type_id' => 1, 'service_type_id' => 1],
-            ['product_type_id' => 1, 'service_type_id' => 2],
-            ['product_type_id' => 1, 'service_type_id' => 3],
-            ['product_type_id' => 1, 'service_type_id' => 4],
-            ['product_type_id' => 2, 'service_type_id' => 1],
-            ['product_type_id' => 2, 'service_type_id' => 2],
-            ['product_type_id' => 3, 'service_type_id' => 1],
-            ['product_type_id' => 3, 'service_type_id' => 2],
-            ['product_type_id' => 4, 'service_type_id' => 1],
-            ['product_type_id' => 4, 'service_type_id' => 2],
-            ['product_type_id' => 4, 'service_type_id' => 3],
-        ]);
+        $productTypeIds = ProductType::select('id')->get()->pluck('id');
+        $serviceTypeIds = Service::select('id')->get()->pluck('id');
+        for ($i = 0; $i < 10; $i++) {
+            TypeService::insert([
+                ['product_type_id' => fake()->randomElement($productTypeIds), 'service_type_id' => fake()->randomElement($serviceTypeIds)],
+            ]);
+        }
     }
 }
