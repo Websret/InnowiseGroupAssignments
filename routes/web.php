@@ -23,10 +23,12 @@ Route::get('/', [ProductController::class, 'index'])->name('index');
 Route::middleware(['auth', 'isAdmin'])->group(function() {
     Route::get('/admin/dashboard', [DashboardController::class, 'show'])->name('admin.dashboard');
 
-    Route::resource('/product', ProductController::class);
+    Route::resource('/product', ProductController::class)->except('index', 'show');
 
     Route::resource('/service', ServiceController::class)->except('index', 'show');
 });
+
+Route::resource('/product', ProductController::class)->only('index', 'show');
 
 Route::resource('/register', RegistrationController::class)->only('create', 'store');
 

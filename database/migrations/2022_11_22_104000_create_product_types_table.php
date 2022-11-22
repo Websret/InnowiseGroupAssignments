@@ -13,7 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('products', function (Blueprint $table) {
+        Schema::create('product_types', function (Blueprint $table) {
+            $table->integerIncrements('id')->unsigned(false);
+            $table->string('type_name');
             $table->timestamps();
         });
     }
@@ -25,8 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        if (\App\Models\Product::exists()){
-            Schema::dropColumns('products', ['created_at', 'updated_at']);
-        }
+        Schema::dropIfExists('product_types');
     }
 };
