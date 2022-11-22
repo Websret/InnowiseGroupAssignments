@@ -27,6 +27,14 @@
         </div>
 
         <div class="form-group">
+            <label for="product_type">Product types:</label>
+            @foreach($productTypes as $key => $value)
+                <br>
+                <input type="checkbox" id="product_type" name="product_type[]" value="{{ $value->id }}">{{ $value->type_name }}
+            @endforeach
+        </div>
+
+        <div class="form-group">
             <button type="submit" class="btn btn-primary">Update</button>
         </div>
     </form>
