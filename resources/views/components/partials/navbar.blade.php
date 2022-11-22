@@ -1,5 +1,5 @@
 <nav class="my-2 my-md-0 mr-md-3 my-nav">
-    <a class="p-2 text-dark" href="/">Home</a>
+    <a class="p-2 text-dark" href="{{ route('index') }}">Home</a>
     @if( auth()->check() )
         <div class="dropdown">
             <a class="p-2 text-dark my-item">{{ auth()->user()->name }} <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
@@ -13,7 +13,6 @@
                 <a href="{{ route('logout') }}">Log Out</a>
             </div>
         </div>
-{{--        <a class="p-2 text-dark" href="/logout">Log Out</a>--}}
     @else
         <a class="p-2 text-dark" href="{{ route('login.create') }}">Log In</a>
         <a class="p-2 text-dark" href="{{ route('register.create') }}">Register</a>
