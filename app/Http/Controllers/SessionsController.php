@@ -22,13 +22,13 @@ class SessionsController extends Controller
             ]);
         }
 
-        return redirect()->to('/');
+        return redirect()->to(route('index'));
     }
 
     public function destroy(): RedirectResponse
     {
         auth()->logout();
 
-        return redirect()->to('/');
+        return redirect()->to(route('index'));
     }
 }
