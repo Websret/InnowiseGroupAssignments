@@ -13,7 +13,8 @@
         {{ csrf_field() }}
         <div class="form-group">
             <label for="service_name">Name:</label>
-            <input type="text" class="form-control" id="service_name" name="service_name" value="{{ $service[0]->service_name }}">
+            <input type="text" class="form-control" id="service_name" name="service_name"
+                   value="{{ $service[0]->service_name }}">
         </div>
 
         <div class="form-group">
@@ -23,14 +24,21 @@
 
         <div class="form-group">
             <label for="service_cost">Cost:</label>
-            <input type="text" class="form-control" id="service_cost" name="service_cost" value="{{ $service[0]->service_cost }}">
+            <input type="text" class="form-control" id="service_cost" name="service_cost"
+                   value="{{ $service[0]->service_cost }}">
         </div>
 
         <div class="form-group">
             <label for="product_type">Product types:</label>
             @foreach($productTypes as $key => $value)
                 <br>
-                <input type="checkbox" id="product_type" name="product_type[]" value="{{ $value->id }}">{{ $value->type_name }}
+                <input type="checkbox" id="product_type" name="product_type[]" value="{{ $value->id }}"
+                    @foreach($activeTypes as $active)
+                        @if($value->id == $active->id)
+                            checked
+                        @endif
+                    @endforeach
+                >{{ $value->type_name }}
             @endforeach
         </div>
 

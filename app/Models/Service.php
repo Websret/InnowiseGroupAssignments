@@ -18,6 +18,6 @@ class Service extends Model
 
     public function productType(): BelongsToMany
     {
-        return $this->belongsToMany(Service::class, 'product_type_services', 'service_type_id', 'product_type_id', 'id', 'id');
+        return $this->belongsToMany(ProductType::class, 'product_type_services', 'service_type_id', 'product_type_id', 'id', 'id');
     }
 }

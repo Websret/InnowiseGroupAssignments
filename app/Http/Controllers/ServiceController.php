@@ -36,6 +36,7 @@ class ServiceController extends Controller
         return view('components.services.edit', [
             'service' => Service::where('id', $id)->get(),
             'productTypes' => ProductType::all(),
+            'activeTypes' => Service::where('id', $id)->with('productType')->first()->productType,
         ]);
     }
 
