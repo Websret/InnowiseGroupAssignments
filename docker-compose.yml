@@ -1,0 +1,41 @@
+services:
+
+    app:
+        build:
+#            args:
+#                user: User
+#                uid: User_id
+            context: ./
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+
+    nginx:
+        image: nginx:alpine
+        restart: unless-stopped
+        ports:
+            - '8000:80'
+        volumes:
+            - ./:/var/www
+            - ./docker-compose/nginx:/etc/nginx/conf.d/
+
+    db:
+        image: mysql
+        # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+        # (this is just an example, not intended to be a production configuration)
+#        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        ports:
+            - '4306:3306'
+#        env_file: .env
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+#        volumes:
+#            - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+
+networks:
+    shop:
+        driver: bridge
