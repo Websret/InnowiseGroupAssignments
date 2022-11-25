@@ -14,7 +14,7 @@ class ProductController extends Controller
 {
     public function index(): Factory|View|Application
     {
-        return view('components.products.show', ['products' => Product::with('type')->get()]);
+        return view('components.products.show', ['products' => Product::with('type')->paginate(5)]);
     }
 
     public function show(int $id): Factory|View|Application

@@ -29,7 +29,6 @@ services:
         restart: always
         ports:
             - '4306:3306'
-#        env_file: .env
         environment:
             MYSQL_DATABASE: ${DB_DATABASE}
             MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}

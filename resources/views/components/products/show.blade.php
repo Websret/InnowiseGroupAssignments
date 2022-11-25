@@ -28,4 +28,6 @@
             </div>
         </div>
     @endforeach
+
+    {{ $products->links() }}
 </x-layouts.layout>
