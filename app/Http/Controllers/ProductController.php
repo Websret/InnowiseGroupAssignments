@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ProductFilter;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Models\ProductType;
@@ -9,12 +10,22 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use \Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index(): Factory|View|Application
+    public function index(Request $request): Factory|View|Application
     {
-        return view('components.products.show', ['products' => Product::with('type')->paginate(5)]);
+        $productFilter = new ProductFilter();
+        $products = $productFilter->run($request, Product::class)
+            ->with('type')
+            ->orderBy($request->order ?: 'name')
+            ->paginate(5);
+
+        return view('components.products.show', [
+            'products' => $products,
+            'productTypes' => ProductType::all(),
+        ]);
     }
 
     public function show(int $id): Factory|View|Application

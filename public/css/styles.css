@@ -460,3 +460,14 @@ input:valid {
     flex-direction: row;
     justify-content: center;
 }
+
+.sidebar {
+    width: 15%;
+    display: block;
+    left: 10px;
+    position: absolute
+}
+
+.sidebar-input {
+    width: -webkit-fill-available;
+}

@@ -6,6 +6,8 @@
         Catalog page
     </x-slot>
 
+    <x-partials.sidebar :productTypes=$productTypes />
+
     @foreach($products as $product)
         <div class="card-deck mb-3 text-center">
             <div class="card mb-4 box-shadow">
