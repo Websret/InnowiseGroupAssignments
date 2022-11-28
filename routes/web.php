@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\SessionsController;
@@ -34,3 +35,6 @@ Route::resource('/register', RegistrationController::class)->only('create', 'sto
 
 Route::resource('/login', SessionsController::class)->only('create', 'store');
 Route::get('/logout', [SessionsController::class, 'destroy'])->name('logout');
+
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.auth');
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback'])->name('google.callback');
