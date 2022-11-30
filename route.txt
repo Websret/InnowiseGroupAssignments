@@ -1,0 +1,30 @@
+
+  GET|HEAD        / ........................................................................................................................ index › ProductController@index
+  POST            _ignition/execute-solution ................................................. ignition.executeSolution › Spatie\LaravelIgnition › ExecuteSolutionController
+  GET|HEAD        _ignition/health-check ............................................................. ignition.healthCheck › Spatie\LaravelIgnition › HealthCheckController
+  POST            _ignition/update-config .......................................................... ignition.updateConfig › Spatie\LaravelIgnition › UpdateConfigController
+  GET|HEAD        admin/dashboard ............................................................................................... admin.dashboard › DashboardController@show
+  GET|HEAD        api/user ................................................................................................................................................. 
+  GET|HEAD        auth/google .............................................................................................. google.auth › GoogleController@redirectToGoogle
+  GET|HEAD        auth/google/callback ............................................................................. google.callback › GoogleController@handleGoogleCallback
+  POST            login ............................................................................................................. login.store › SessionsController@store
+  GET|HEAD        login/create .................................................................................................... login.create › SessionsController@create
+  GET|HEAD        logout ............................................................................................................... logout › SessionsController@destroy
+  POST            product .......................................................................................................... product.store › ProductController@store
+  GET|HEAD        product .......................................................................................................... product.index › ProductController@index
+  GET|HEAD        product/create ................................................................................................. product.create › ProductController@create
+  PUT|PATCH       product/{product} .............................................................................................. product.update › ProductController@update
+  DELETE          product/{product} ............................................................................................ product.destroy › ProductController@destroy
+  GET|HEAD        product/{product} .................................................................................................. product.show › ProductController@show
+  GET|HEAD        product/{product}/edit ............................................................................................. product.edit › ProductController@edit
+  POST            register ................................................................................................... register.store › RegistrationController@store
+  GET|HEAD        register/create .......................................................................................... register.create › RegistrationController@create
+  GET|HEAD        sanctum/csrf-cookie .................................................................... sanctum.csrf-cookie › Laravel\Sanctum › CsrfCookieController@show
+  POST            service .......................................................................................................... service.store › ServiceController@store
+  GET|HEAD        service/create ................................................................................................. service.create › ServiceController@create
+  PUT|PATCH       service/{service} .............................................................................................. service.update › ServiceController@update
+  DELETE          service/{service} ............................................................................................ service.destroy › ServiceController@destroy
+  GET|HEAD        service/{service}/edit ............................................................................................. service.edit › ServiceController@edit
+
+                                                                                                                                                         Showing [26] routes
+

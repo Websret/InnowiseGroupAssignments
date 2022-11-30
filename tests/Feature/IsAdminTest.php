@@ -18,15 +18,15 @@ class IsAdminTest extends TestCase
      */
     public function test_is_admin_and_view_admin_dashboard()
     {
-        $this->seed(UserTypes::class);
         $user = User::factory()->create(['type_id' => 2]);
+//        $user = User::where('type_id', '=', 2)->first();
 
         $response = $this->actingAs($user)
             ->withSession(['banned' => false])
             ->get('/admin/dashboard');
 
+        $user->delete();
         $response->assertStatus(200);
         $this->assertAuthenticated();
-        $this->artisan('migrate:refresh');
     }
 }

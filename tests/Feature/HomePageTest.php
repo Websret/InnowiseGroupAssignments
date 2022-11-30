@@ -17,12 +17,9 @@ class HomePageTest extends TestCase
      */
     public function test_a_home_page_view()
     {
-        $this->seed(ProductTypes::class);
-        $products = Product::factory(2)->create();
+        $response = $this->get('/');
 
-        $view = $this->view('components.products.show', ['products' => $products]);
-
-        $view->assertSee('product');
+        $response->assertSee('product');
         $this->assertGuest();
     }
 }

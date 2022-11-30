@@ -15,7 +15,8 @@ class ShowProductTest extends TestCase
      */
     public function test_show_product_page()
     {
-        $product = Product::factory(1)->create();
+//        $product = Product::factory(1)->create();
+        $product = Product::all();
         $page = (new ProductController())->show($product[0]->id);
         $this->assertEquals($product[0]->name, $page->product[0]->name);
     }

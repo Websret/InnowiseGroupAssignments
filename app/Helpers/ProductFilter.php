@@ -15,7 +15,7 @@ class ProductFilter
         $this->query = $class::query();
 
         foreach ($this->filters as $filter) {
-            if ($request->$filter && $request->$filter !== 'All') {
+            if ($request->$filter && $request->$filter !== 'all') {
                 $this->$filter($request->$filter);
             }
         }

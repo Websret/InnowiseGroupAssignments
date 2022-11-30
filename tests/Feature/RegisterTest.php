@@ -19,7 +19,7 @@ class RegisterTest extends TestCase
     public function test_registration_with_headers()
     {
 //        $this->artisan('migrate:refresh');
-        $this->seed(UserTypes::class);
+//        $this->seed(UserTypes::class);
         $password = fake()->password;
         $response = $this->post(route('register.store'), [
             'name' => fake()->name,

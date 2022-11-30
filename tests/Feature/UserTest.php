@@ -16,7 +16,8 @@ class UserTest extends TestCase
      */
     public function test_an_action_that_requires_authentication()
     {
-        $user = User::factory()->create();
+//        $user = User::factory()->create();
+        $user = User::first();
 
         $response = $this->actingAs($user)
             ->withSession(['banned' => false])
