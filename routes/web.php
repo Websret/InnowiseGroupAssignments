@@ -7,6 +7,7 @@ use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\SessionsController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\ServiceController;
+use \App\Http\Controllers\CsvToS3Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,8 @@ Route::middleware(['auth', 'isAdmin'])->group(function() {
     Route::resource('/product', ProductController::class)->except('index', 'show');
 
     Route::resource('/service', ServiceController::class)->except('index', 'show');
+
+    Route::get('csv/export', [CsvToS3Controller::class, 'export'])->name('csv.export');
 });
 
 Route::resource('/product', ProductController::class)->only('index', 'show');

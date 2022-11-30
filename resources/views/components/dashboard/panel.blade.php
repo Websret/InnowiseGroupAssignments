@@ -6,9 +6,14 @@
         Dashboard
     </x-slot>
 
-    <x-dashboard.products :products=$products />
+    <p>Export catalog in csv file -
+        <a href="{{ route('csv.export') }}">
+            <button type="button" class="btn btn-secondary">Export</button>
+        </a>
+    </p>
+    <x-dashboard.products :products=$products/>
     <hr>
     <br>
-    <x-dashboard.services :services=$services />
+    <x-dashboard.services :services=$services/>
 
 </x-layouts.layout>
