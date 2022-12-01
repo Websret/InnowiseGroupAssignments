@@ -31,8 +31,7 @@ class CsvToS3Controller extends Controller
 
         fclose($fp);
 
-//        $content = Storage::disk('s3')->get('catalog-Denis-2022_12_01.csv');
-        Storage::disk('s3')->put( $filepath, $filename);
+        Storage::disk('s3')->put($filename, 'Content');
         return Storage::disk('public')->download($filename);
     }
 }
