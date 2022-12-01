@@ -14,8 +14,9 @@ class CsvToS3Controller extends Controller
     {
         $products = Product::with('type')->get();
 
-        $filename = public_path('storage/catalog-' . Auth::user()->name . '-'.date('Y_m_d'). '.csv');
-        $fp = fopen($filename, 'w');
+        $filename = 'catalog-' . Auth::user()->id . '-'.date('Y_m_d'). '.csv';
+        $filepath = public_path('storage/' . $filename);
+        $fp = fopen($filepath, 'w');
 
         foreach ($products as $fields) {
             fputcsv($fp, [
@@ -30,6 +31,8 @@ class CsvToS3Controller extends Controller
 
         fclose($fp);
 
-        return Storage::disk('public')->download('catalog-Test-2022_11_30.csv');
+//        $content = Storage::disk('s3')->get('catalog-Denis-2022_12_01.csv');
+        Storage::disk('s3')->put( $filepath, $filename);
+        return Storage::disk('public')->download($filename);
     }
 }
