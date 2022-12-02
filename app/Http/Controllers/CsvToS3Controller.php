@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Files;
 use App\Models\Product;
 
 use Illuminate\Http\Request;
@@ -31,7 +32,8 @@ class CsvToS3Controller extends Controller
 
         fclose($fp);
 
-        Storage::disk('s3')->put($filename, 'Content');
+        Storage::disk('s3')->putFileAs('bucket', $filepath, $filename, 'public');
+        Storage::disk('s3')->response('images/', $filepath);
         return Storage::disk('public')->download($filename);
     }
 }

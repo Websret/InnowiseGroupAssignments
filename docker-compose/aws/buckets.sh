@@ -1,3 +1,3 @@
 set -x
-awslocal s3 mb s3://${AWS_BUCKET}
+awslocal s3 mb s3://bucket
 set +x
