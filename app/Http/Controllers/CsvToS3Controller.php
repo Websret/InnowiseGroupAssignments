@@ -81,34 +81,30 @@ class CsvToS3Controller extends Controller
         $plaintextBody = 'This email was send with Amazon SES using the AWS SDK for PHP.';
         $charSet = 'UTF-8';
 
-        try {
-            $sesClient->sendEmail([
-                'Destination' => [
-                    'ToAddresses' => $recipientEmails,
-                ],
-                'ReplyToAddresses' => [$senderEmail],
-                'Source' => $senderEmail,
-                'Message' => [
-                    'Body' => [
-                        'Html' => [
-                            'Charset' => $charSet,
-                            'Data' => $htmlBody,
-                        ],
-                        'Text' => [
-                            'Charset' => $charSet,
-                            'Data' => $plaintextBody,
-                        ],
-                    ],
-                    'Subject' => [
+        $sesClient->sendEmail([
+            'Destination' => [
+                'ToAddresses' => $recipientEmails,
+            ],
+            'ReplyToAddresses' => [$senderEmail],
+            'Source' => $senderEmail,
+            'Message' => [
+                'Body' => [
+                    'Html' => [
                         'Charset' => $charSet,
-                        'Data' => $subject,
+                        'Data' => $htmlBody,
+                    ],
+                    'Text' => [
+                        'Charset' => $charSet,
+                        'Data' => $plaintextBody,
                     ],
                 ],
-                'ConfigurationSetName' => $configurationSet,
-            ]);
-        } catch (AwsException $e) {
-            echo $e->getMessage();
-        }
+                'Subject' => [
+                    'Charset' => $charSet,
+                    'Data' => $subject,
+                ],
+            ],
+            'ConfigurationSetName' => $configurationSet,
+        ]);
     }
 
     private function verifyEmail(): void
