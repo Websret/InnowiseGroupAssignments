@@ -44,9 +44,10 @@ services:
             - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
             - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
             - LEGACY_DIRECTORIES=1
+            - LOCALSTACK_API_KEY=2wFqJN1uWw
         ports:
-            - "127.0.0.1:4566:4566"            # LocalStack Gateway
-            - "127.0.0.1:4510-4559:4510-4559"  # external services port range
+            - "4566:4566"            # LocalStack Gateway
+            - "4510-4559:4510-4559"  # external services port range
         volumes:
             - "./docker-compose/aws:/docker-entrypoint-initaws.d"
             - "./storage/app/public:/tmp/localstack"
