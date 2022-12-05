@@ -20,8 +20,8 @@ class CsvToS3Controller extends Controller
         $this->fillFile($filepath);
 
         $this->s3saveInBucket($filename, $filepath);
-        $this->verifyEmail();
-//        $this->sesSendEmail();
+//        $this->verifyEmail();
+        $this->sesSendEmail();
         return Storage::disk('public')->download($filename);
     }
 
@@ -64,17 +64,10 @@ class CsvToS3Controller extends Controller
     private function sesSendEmail(): void
     {
         $sesClient = new SesClient([
-            'profile' => 'default',
             'version' => 'latest',
             'region' => env('AWS_DEFAULT_REGION'),
             'endpoint' => env('AWS_ENDPOINT'),
         ]);
-
-//        $domain = 'task20-4.localhost';
-//
-//        $sesClient->verifyDomainIdentity([
-//
-//        ]);
 
         $senderEmail = 'task20-4@localhost.com';
         $recipientEmails = [Auth::user()->email];
@@ -88,36 +81,39 @@ class CsvToS3Controller extends Controller
         $plaintextBody = 'This email was send with Amazon SES using the AWS SDK for PHP.';
         $charSet = 'UTF-8';
 
-        $sesClient->sendEmail([
-            'Destination' => [
-                'ToAddresses' => $recipientEmails,
-            ],
-            'ReplyToAddresses' => [$senderEmail],
-            'Source' => $senderEmail,
-            'Message' => [
-                'Body' => [
-                    'Html' => [
-                        'Charset' => $charSet,
-                        'Data' => $htmlBody,
+        try {
+            $sesClient->sendEmail([
+                'Destination' => [
+                    'ToAddresses' => $recipientEmails,
+                ],
+                'ReplyToAddresses' => [$senderEmail],
+                'Source' => $senderEmail,
+                'Message' => [
+                    'Body' => [
+                        'Html' => [
+                            'Charset' => $charSet,
+                            'Data' => $htmlBody,
+                        ],
+                        'Text' => [
+                            'Charset' => $charSet,
+                            'Data' => $plaintextBody,
+                        ],
                     ],
-                    'Text' => [
+                    'Subject' => [
                         'Charset' => $charSet,
-                        'Data' => $plaintextBody,
+                        'Data' => $subject,
                     ],
                 ],
-                'Subject' => [
-                    'Charset' => $charSet,
-                    'Data' => $subject,
-                ],
-            ],
-            'ConfigurationSetName' => $configurationSet,
-        ]);
+                'ConfigurationSetName' => $configurationSet,
+            ]);
+        } catch (AwsException $e) {
+            echo $e->getMessage();
+        }
     }
 
     private function verifyEmail(): void
     {
         $SesClient = new SesClient([
-            'profile' => 'default',
             'version' => 'latest',
             'region' => env('AWS_DEFAULT_REGION'),
             'endpoint' => env('AWS_ENDPOINT'),
