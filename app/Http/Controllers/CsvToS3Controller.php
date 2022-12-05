@@ -20,7 +20,8 @@ class CsvToS3Controller extends Controller
 
         (new s3Aws)->s3saveInBucket($filename, $filepath);
 //        (new sesVerifyEmail)->verifyEmail();
-        (new sesSendEmail)->sesSendEmail();
+//        Mail::mailer('ses')->to(Auth::user())->send(new CatalogExported());
+        event(new \App\Events\sesSendEmail());
         return Storage::disk('public')->download($filename);
     }
 
