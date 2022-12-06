@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Helpers\GetXMLData;
+use App\Helpers\EmploymentWithCurrencyData;
 use App\Models\Currency;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -16,8 +16,8 @@ class Currencies extends Seeder
      */
     public function run()
     {
-        $xmlData = new GetXMLData();
-        $currencies = $xmlData->getCurrency('https://bankdabrabyt.by/export_courses.php');
+        $xmlData = new EmploymentWithCurrencyData();
+        $currencies = $xmlData->getCurrency(env('CURRENCY_XML_FILE'));
 
         foreach ($currencies as $currency => $value) {
             Currency::insert([

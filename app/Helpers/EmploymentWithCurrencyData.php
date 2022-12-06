@@ -2,7 +2,9 @@
 
 namespace App\Helpers;
 
-class GetXMLData
+use App\Models\Currency;
+
+class EmploymentWithCurrencyData
 {
     public function getCurrency(string $file): bool|array
     {
@@ -17,5 +19,15 @@ class GetXMLData
             ];
         }
         return false;
+    }
+
+    public function reviseAndUpdateCurrencyInDb(array $data): void
+    {
+        foreach ($data as $currency => $value) {
+            $curr = Currency::where('name', $currency)->get();
+            if ($curr[0]['cost'] != $value) {
+                Currency::where('name', $currency)->update(['cost' => $value]);
+            }
+        }
     }
 }

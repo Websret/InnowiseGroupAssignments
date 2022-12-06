@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\GetXMLData;
+use App\Helpers\EmploymentWithCurrencyData;
 use App\Helpers\ProductFilter;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\Currency;
 use App\Models\Product;
 use App\Models\ProductType;
 use Illuminate\Contracts\Foundation\Application;
@@ -17,8 +18,9 @@ class ProductController extends Controller
 {
     public function index(Request $request): Factory|View|Application
     {
-        $xmlData = new GetXMLData();
-        $currencies = $xmlData->getCurrency('https://bankdabrabyt.by/export_courses.php');
+        $xmlData = new EmploymentWithCurrencyData();
+        $currencies = $xmlData->getCurrency(env('CURRENCY_XML_FILE'));
+        $xmlData->reviseAndUpdateCurrencyInDb($currencies);
 
         $productFilter = new ProductFilter();
         $products = $productFilter->run($request, Product::class)
