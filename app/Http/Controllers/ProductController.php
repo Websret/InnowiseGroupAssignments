@@ -20,7 +20,7 @@ class ProductController extends Controller
     {
         $xmlData = new EmploymentWithCurrencyData();
         $currencies = $xmlData->getCurrency(env('CURRENCY_XML_FILE'));
-        $xmlData->reviseAndUpdateCurrencyInDb($currencies);
+        $xmlData->reviseAndUpdateCurrency($currencies);
 
         $productFilter = new ProductFilter();
         $products = $productFilter->run($request, Product::class)
@@ -31,6 +31,7 @@ class ProductController extends Controller
         return view('components.products.show', [
             'products' => $products,
             'productTypes' => ProductType::all(),
+            'currencies' => Currency::all(),
         ]);
     }
 

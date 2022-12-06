@@ -13,15 +13,15 @@ class EmploymentWithCurrencyData
             $xml = simplexml_load_file($file);
 
             return [
-                'usd' => (float) $xml->filials->filial[0]->rates->value[0]['sale'],
-                'eur' => (float) $xml->filials->filial[0]->rates->value[1]['sale'],
-                'rub' => (float) $xml->filials->filial[0]->rates->value[2]['sale'],
+                'USD' => (float) $xml->filials->filial[0]->rates->value[0]['sale'],
+                'EUR' => (float) $xml->filials->filial[0]->rates->value[1]['sale'],
+                'RUB' => (float) $xml->filials->filial[0]->rates->value[2]['sale'],
             ];
         }
         return false;
     }
 
-    public function reviseAndUpdateCurrencyInDb(array $data): void
+    public function reviseAndUpdateCurrency(array $data): void
     {
         foreach ($data as $currency => $value) {
             $curr = Currency::where('name', $currency)->get();
