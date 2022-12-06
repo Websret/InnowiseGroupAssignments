@@ -19,7 +19,7 @@
                                 BYN</small></h1>
                         <span>
                         @foreach($currencies as $currency)
-                                {{ round($product->cost / $currency->cost, 2) }} <i>{{ $currency->name }}</i>
+                                {{ round($product->cost / $currency->cost, 2) }} <small>{{ $currency->name }}</small>
                             @endforeach
                         </span>
                         <ul class="list-unstyled mt-3 mb-4">
