@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\GetXMLData;
 use App\Helpers\ProductFilter;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
@@ -16,6 +17,9 @@ class ProductController extends Controller
 {
     public function index(Request $request): Factory|View|Application
     {
+        $xmlData = new GetXMLData();
+        $currencies = $xmlData->getCurrency('https://bankdabrabyt.by/export_courses.php');
+
         $productFilter = new ProductFilter();
         $products = $productFilter->run($request, Product::class)
             ->with('type')

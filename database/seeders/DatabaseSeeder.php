@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             Services::class,
             UserTypes::class,
             TypeServices::class,
+            Currencies::class,
         ]);
 
         Product::factory(10)->create();
