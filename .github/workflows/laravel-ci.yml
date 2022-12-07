@@ -1,6 +1,9 @@
 name: Task4.6
 
 on:
+  push:
+    branches:
+      - master
   pull_request:
     branches: [ master ]
 
