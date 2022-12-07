@@ -1,31 +1,23 @@
 name: Task4.6
 
 on:
-  push:
-    - main
   pull_request:
-    branches: ["main"]
+    branches: [ master, staging ]
 
 jobs:
-
   laravel-tests:
 
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.1
-          extensions: pdo_mysql, mbstring, exif, pcntl, bcmath, gd
       - name: Copy .env.example to .env
-        run: php -r "file_exist('.env') || copy('.env.example', '.env');
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Install composer dependencies
         run: composer install
       - name: Set required directory permissions
         run: chmod -R 777 storage bootstrap/cache
-      - name: Generate encrypt key
+      - name: Generate encryption key
         run: php artisan key:generate
       - name: Create temporary sqlite database
         run: |
