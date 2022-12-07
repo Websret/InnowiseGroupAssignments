@@ -2,9 +2,7 @@ name: Task4.6
 
 on:
   push:
-    branches:
-      - master
-      - main
+    branches: ["master", "main"]
   pull_request:
     branches: [ master, main ]
 
