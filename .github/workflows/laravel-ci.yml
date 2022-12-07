@@ -45,7 +45,7 @@ jobs:
     steps:
       - name: Start LocalStack
         env:
-          LOCALSTACK_API_KEY: ${{ env('LOCALSTACK_API_KEY') }}
+          LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
         run: |
           pip install localstack awscli-local[ver1] # install LocalStack cli and awslocal
           docker pull localstack/localstack         # Make sure to pull the latest version of the image
