@@ -27,7 +27,9 @@ jobs:
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
-        run: php artisan migrate --force
+        run: |
+          php artisan migrate --force
+          php artisan db:seed
       - name: Install NPM dependencies
         run: npm install
 #      - name: Minify CSS and JS files
