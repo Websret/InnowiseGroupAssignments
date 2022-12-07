@@ -3,6 +3,8 @@ name: Task4.6
 on:
   push:
     branches: ["main"]
+  pull_request:
+    branches: ["main"]
 
 jobs:
   laravel-tests:
