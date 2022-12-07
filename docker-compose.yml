@@ -1,0 +1,54 @@
+services:
+
+    app:
+        build:
+#            args:
+#                user: User
+#                uid: User_id
+            context: ./
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+            - ./docker-compose/assets/xdebug.ini:/usr/local/etc/php/conf.d/zz-xdebug.ini
+
+    nginx:
+        image: nginx:alpine
+        restart: unless-stopped
+        ports:
+            - '8000:80'
+        volumes:
+            - ./:/var/www
+            - ./docker-compose/nginx:/etc/nginx/conf.d/
+
+    db:
+        image: mysql
+        # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+        # (this is just an example, not intended to be a production configuration)
+#        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        ports:
+            - '4306:3306'
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+#        volumes:
+#            - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+
+    localstack:
+        container_name: localstack
+        image: localstack/localstack
+        environment:
+            - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+            - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+            - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+            - LEGACY_DIRECTORIES=1
+            - LOCALSTACK_API_KEY=${LOCALSTACK_API_KEY}
+        ports:
+            - "4566:4566"            # LocalStack Gateway
+            - "4510-4559:4510-4559"  # external services port range
+        volumes:
+            - "./docker-compose/aws:/docker-entrypoint-initaws.d"
+            - "./storage/app/public:/tmp/localstack"
+            - "/var/run/docker.sock:/var/run/docker.sock"
