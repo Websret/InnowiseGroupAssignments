@@ -32,8 +32,6 @@ jobs:
           php artisan db:seed
       - name: Install NPM dependencies
         run: npm install
-#      - name: Minify CSS and JS files
-#        run: npm run prod
       - name: Run unit tests via PHPUnit
         env:
           DB_CONNECTION: sqlite
