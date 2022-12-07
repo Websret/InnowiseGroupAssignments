@@ -2,7 +2,7 @@ name: Task4.6
 
 on:
   pull_request:
-    branches: [ master, staging ]
+    branches: [ master ]
 
 jobs:
   laravel-tests:
@@ -30,8 +30,8 @@ jobs:
         run: php artisan migrate --force
       - name: Install NPM dependencies
         run: npm install
-      - name: Minify CSS and JS files
-        run: npm run prod
+#      - name: Minify CSS and JS files
+#        run: npm run prod
       - name: Run unit tests via PHPUnit
         env:
           DB_CONNECTION: sqlite
