@@ -8,10 +8,11 @@ services:
             args:
                 WWWGROUP: '${WWWGROUP}'
         image: sail-8.1/app
+        user: root
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
-            - '${APP_PORT:-80}:80'
+            - '${APP_PORT:-8000}:80'
             - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
         environment:
             WWWUSER: '${WWWUSER}'
