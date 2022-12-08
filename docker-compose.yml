@@ -2,12 +2,13 @@ services:
 
     app:
         build:
-#            args:
-#                user: User
-#                uid: User_id
+            #            args:
+            #                user: User
+            #                uid: User_id
             context: ./
             dockerfile: Dockerfile
         restart: unless-stopped
+#        user: root
         working_dir: /var/www/
         volumes:
             - ./:/var/www
@@ -26,15 +27,15 @@ services:
         image: mysql
         # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
         # (this is just an example, not intended to be a production configuration)
-#        command: --default-authentication-plugin=mysql_native_password
+        #        command: --default-authentication-plugin=mysql_native_password
         restart: always
         ports:
             - '4306:3306'
         environment:
             MYSQL_DATABASE: ${DB_DATABASE}
             MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-#        volumes:
-#            - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+    #        volumes:
+    #            - ./docker-compose/mysql:/docker-entrypoint-initdb.d
 
     localstack:
         container_name: localstack
@@ -52,3 +53,12 @@ services:
             - "./docker-compose/aws:/docker-entrypoint-initaws.d"
             - "./storage/app/public:/tmp/localstack"
             - "/var/run/docker.sock:/var/run/docker.sock"
+
+    rabbitmq:
+        container_name: rabbitmq
+        image: rabbitmq:3-management
+        volumes:
+            - ./docker-compose/db-data:/var/lib/rabbitmq
+        ports:
+            - 5672:5672
+            - 15672:15672
