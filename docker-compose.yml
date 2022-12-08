@@ -8,7 +8,6 @@ services:
             args:
                 WWWGROUP: '${WWWGROUP}'
         image: sail-8.1/app
-        user: root
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
@@ -17,10 +16,9 @@ services:
         environment:
             WWWUSER: '${WWWUSER}'
             LARAVEL_SAIL: 1
-            XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
-            XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
         volumes:
             - '.:/var/www/html'
+            - ./docker-compose/assets/xdebug.ini:/etc/php/8.1/cli/conf.d/zz-xdebug.ini
         networks:
             - sail
         depends_on:
@@ -88,6 +86,35 @@ services:
             - '/dev/shm:/dev/shm'
         networks:
             - sail
+    localstack:
+        container_name: localstack
+        image: localstack/localstack
+        environment:
+            - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+            - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+            - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+            - LEGACY_DIRECTORIES=1
+            - LOCALSTACK_API_KEY=${LOCALSTACK_API_KEY}
+        ports:
+            - "4566:4566"            # LocalStack Gateway
+            - "4510-4559:4510-4559"  # external services port range
+        volumes:
+            - "sail-localstack:/opt/code/localstack"
+            - "./docker-compose/aws:/docker-entrypoint-initaws.d"
+            - "./storage/app/public:/tmp/localstack"
+            - "/var/run/docker.sock:/var/run/docker.sock"
+        networks:
+            - sail
+    rabbitmq:
+        container_name: rabbitmq
+        image: rabbitmq:3-management
+        volumes:
+            - "sail-rabbitmq:/var/rabbitmq"
+            - ./docker-compose/db-data:/var/lib/rabbitmq
+        ports:
+            - 5672:5672
+            - 15672:15672
+
 networks:
     sail:
         driver: bridge
@@ -97,4 +124,8 @@ volumes:
     sail-redis:
         driver: local
     sail-meilisearch:
+        driver: local
+    sail-localstack:
+        driver: local
+    sail-rabbitmq:
         driver: local

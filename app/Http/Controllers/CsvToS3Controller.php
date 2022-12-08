@@ -19,7 +19,7 @@ class CsvToS3Controller extends Controller
 
         $this->fillFile($filepath);
 
-        (new DispatcherQueue)->run($filename, $filepath);
+//        (new DispatcherQueue)->run($filename, $filepath);
         (new s3Aws)->s3saveInBucket($filename, $filepath);
         (new sesVerifyEmail)->verifyEmail();
 //        Mail::mailer('ses')->to(Auth::user())->send(new CatalogExported());
