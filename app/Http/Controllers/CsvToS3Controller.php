@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\DispatcherQueue;
 use App\Helpers\sesSendEmail;
 use App\Helpers\sesVerifyEmail;
+use App\Jobs\SendFileJob;
 use App\Models\Product;
 use App\Helpers\S3Aws;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use VladimirYuldashev\LaravelQueueRabbitMQ\Queue\Connectors\RabbitMQConnector;
 
 class CsvToS3Controller extends Controller
 {
@@ -19,11 +20,14 @@ class CsvToS3Controller extends Controller
 
         $this->fillFile($filepath);
 
-//        (new DispatcherQueue)->run($filename, $filepath);
-        (new s3Aws)->s3saveInBucket($filename, $filepath);
-        (new sesVerifyEmail)->verifyEmail();
+//        SendFileJob::dispatch($filename, $filepath)->onQueue('text');
+
+        dispatch(new SendFileJob($filename, $filepath));
+
+//        (new s3Aws)->s3saveInBucket($filename, $filepath);
+//        (new sesVerifyEmail)->verifyEmail();
 //        Mail::mailer('ses')->to(Auth::user())->send(new CatalogExported());
-        event(new \App\Events\sesSendEmail());
+//        event(new \App\Events\sesSendEmail());
         return Storage::disk('public')->download($filename);
     }
 
