@@ -20,14 +20,8 @@ class CsvToS3Controller extends Controller
 
         $this->fillFile($filepath);
 
-//        SendFileJob::dispatch($filename, $filepath)->onQueue('text');
+        dispatch(new SendFileJob(Auth::user(),$filename, $filepath));
 
-        dispatch(new SendFileJob($filename, $filepath));
-
-//        (new s3Aws)->s3saveInBucket($filename, $filepath);
-//        (new sesVerifyEmail)->verifyEmail();
-//        Mail::mailer('ses')->to(Auth::user())->send(new CatalogExported());
-//        event(new \App\Events\sesSendEmail());
         return Storage::disk('public')->download($filename);
     }
 
